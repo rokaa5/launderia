@@ -1,0 +1,36 @@
+<ion-modal
+  class="launderia-modal"
+  [isOpen]="feedback !== null"
+  aria-label="Launderia message"
+  (willDismiss)="closed.emit()"
+  (didDismiss)="dismissed.emit()">
+  <ng-template>
+    @if (feedback; as notice) {
+      <section class="feedback-dialog" [class.is-error]="notice.kind === 'error'">
+        <div aria-live="polite">
+          <header class="dialog-heading">
+            <span class="dialog-symbol" aria-hidden="true">{{ notice.kind === 'success' ? '✓' : notice.kind === 'error' ? '!' : '?' }}</span>
+            <h2 id="feedback-title">{{ notice.title }}</h2>
+            <button class="modal-close" type="button" aria-label="Close dialog" (click)="closed.emit()">×</button>
+          </header>
+          <p id="feedback-description">{{ notice.message }}</p>
+        </div>
+        @if (notice.details) {
+          <dl>
+            @for (detail of notice.details; track detail.label) {
+              <div><dt>{{ detail.label }}</dt><dd>{{ detail.value }}</dd></div>
+            }
+          </dl>
+        }
+        <div class="dialog-actions">
+          @if (notice.kind === 'confirm') {
+            <button class="dialog-button secondary" type="button" (click)="closed.emit()">Cancel</button>
+            <button class="dialog-button" [class.destructive]="notice.destructive" type="button" (click)="confirmed.emit()">{{ notice.confirmLabel }}</button>
+          } @else {
+            <button class="dialog-button" type="button" (click)="closed.emit()">{{ notice.kind === 'error' ? 'Back to form' : 'Got it' }}</button>
+          }
+        </div>
+      </section>
+    }
+  </ng-template>
+</ion-modal>

@@ -1,9 +1,20 @@
 
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { FeedbackMessage } from './feedback-modal.component';
+import { addIcons } from 'ionicons';
+import {
+  arrowForwardOutline, arrowBackOutline, gridOutline, homeOutline,
+  shirtOutline, calculatorOutline, receiptOutline, logOutOutline,
+  waterOutline, sparklesOutline, timeOutline, checkmarkOutline,
+  addOutline, removeOutline, searchOutline, leafOutline, walletOutline
+} from 'ionicons/icons';
 
 type UserRole = 'customer' | 'admin';
 type AuthView = 'welcome' | 'login' | 'signup';
 type PageName = 'home' | 'services' | 'estimator' | 'orders' | 'customer' | 'admin';
+type FormField = 'loginUsername' | 'loginPassword' | 'signupName' | 'signupUsername' |
+  'signupPassword' | 'confirmPassword' | 'orderCustomer' | 'orderService' | 'orderQuantity' |
+  'estimatorService' | 'estimatorQuantity';
 
 interface CustomerAccount {
   name: string;
@@ -45,6 +56,141 @@ interface MonthlySale {
   standalone: false
 })
 export class HomePage {
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  @ViewChild('pageContent', { read: ElementRef }) private pageContent?: ElementRef<HTMLIonContentElement>;
+  feedback: FeedbackMessage | null = null;
+  private pendingAction: (() => void) | null = null;
+  private feedbackOrigin: HTMLElement | null = null;
+  fieldErrors: Partial<Record<FormField, string>> = {};
+  usernameSuggestionsOpen = false;
+  activeUsernameSuggestion = -1;
+  private recentUsernames: { username: string; role: UserRole }[] = [];
+
+  clearFieldError(field: FormField): void {
+    delete this.fieldErrors[field];
+  }
+
+  private focusInvalidField(): void {
+    requestAnimationFrame(() => this.host.nativeElement.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus());
+  }
+
+  get usernameSuggestions(): string[] {
+    const query = this.username.trim().toLowerCase();
+    if (!this.usernameSuggestionsOpen || !query) return [];
+    const candidates = [
+      ...this.recentUsernames.filter(item => item.role === this.selectedRole).map(item => item.username),
+      ...(this.selectedRole === 'admin' ? ['admin'] : ['customer', 'maria'])
+    ];
+    const unique = new Map<string, string>();
+    candidates.forEach(name => { if (!unique.has(name.toLowerCase())) unique.set(name.toLowerCase(), name); });
+    return [...unique.values()].filter(name => name.toLowerCase().startsWith(query)).slice(0, 5);
+  }
+
+  onUsernameInput(value: string): void {
+    this.username = value;
+    this.clearFieldError('loginUsername');
+    this.clearFieldError('loginPassword');
+    this.activeUsernameSuggestion = -1;
+    this.usernameSuggestionsOpen = value.trim().length > 0;
+  }
+
+  closeUsernameSuggestions(): void {
+    this.usernameSuggestionsOpen = false;
+    this.activeUsernameSuggestion = -1;
+  }
+
+  selectUsername(username: string): void {
+    this.username = username;
+    this.clearFieldError('loginUsername');
+    this.clearFieldError('loginPassword');
+    this.closeUsernameSuggestions();
+  }
+
+  onUsernameKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape' || event.key === 'Tab') {
+      this.closeUsernameSuggestions();
+      return;
+    }
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      this.usernameSuggestionsOpen = this.username.trim().length > 0;
+      const count = this.usernameSuggestions.length;
+      if (!count) return;
+      event.preventDefault();
+      this.activeUsernameSuggestion = event.key === 'ArrowDown'
+        ? (this.activeUsernameSuggestion + 1) % count
+        : (this.activeUsernameSuggestion < 0 ? count - 1 : (this.activeUsernameSuggestion - 1 + count) % count);
+    } else if (event.key === 'Enter' && this.activeUsernameSuggestion >= 0 && this.usernameSuggestions.length) {
+      event.preventDefault();
+      this.selectUsername(this.usernameSuggestions[this.activeUsernameSuggestion]);
+    }
+  }
+
+  private rememberUsername(): void {
+    const username = this.username.trim();
+    const role = this.selectedRole;
+    this.recentUsernames = [
+      { username, role },
+      ...this.recentUsernames.filter(item => item.role !== role || item.username.toLowerCase() !== username.toLowerCase())
+    ].slice(0, 8);
+    try {
+      localStorage.setItem('launderia-recent-usernames', JSON.stringify(this.recentUsernames));
+    } catch {
+      // Saving suggestions is optional; unavailable storage must not block sign-in.
+    }
+    this.closeUsernameSuggestions();
+  }
+
+  private showFeedback(message: FeedbackMessage, action: (() => void) | null = null): void {
+    if (!this.feedback) {
+      this.feedbackOrigin = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    }
+    this.pendingAction = action;
+    this.feedback = message;
+  }
+
+  private notify(message: string, kind: 'error' | 'success' = 'error'): void {
+    this.showFeedback({
+      kind,
+      title: kind === 'success' ? 'All taken care of.' : 'Let’s check that.',
+      message
+    });
+  }
+
+  dismissFeedback(): void {
+    this.pendingAction = null;
+    this.feedback = null;
+  }
+
+  onFeedbackDismissed(): void {
+    // An older modal's exit animation must not interfere with a newer message.
+    if (this.feedback) return;
+    const origin = this.feedbackOrigin;
+    this.feedbackOrigin = null;
+    // Wait until Ionic removes the overlay and makes the app focusable again.
+    requestAnimationFrame(() => {
+      if (this.feedback) return;
+      const target = origin?.isConnected
+        ? origin
+        : this.host.nativeElement.querySelector<HTMLElement>('.auth-content h2, .workspace-main h1');
+      if (target) {
+        if (!target.matches('button, input, select, a, [tabindex]')) target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+      }
+    });
+  }
+
+  navigate(page: PageName): void {
+    this.activePage = page;
+    void this.pageContent?.nativeElement.scrollToTop?.(0);
+  }
+
+  confirmFeedback(): void {
+    const action = this.pendingAction;
+    if (!action) return;
+    // Clear first so repeated clicks cannot perform the operation twice.
+    this.pendingAction = null;
+    action();
+  }
   loggedIn = false;
   authView: AuthView = 'welcome';
   selectedRole: UserRole = 'customer';
@@ -113,30 +259,53 @@ export class HomePage {
   };
 
   constructor() {
+    addIcons({
+      arrowForwardOutline, arrowBackOutline, gridOutline, homeOutline,
+      shirtOutline, calculatorOutline, receiptOutline, logOutOutline,
+      waterOutline, sparklesOutline, timeOutline, checkmarkOutline,
+      addOutline, removeOutline, searchOutline, leafOutline, walletOutline
+    });
     this.loadOrders();
     this.loadCustomerAccounts();
+    try {
+      const recent: unknown = JSON.parse(localStorage.getItem('launderia-recent-usernames') || '[]');
+      this.recentUsernames = Array.isArray(recent) ? recent.filter(item =>
+        item && typeof item.username === 'string' && item.username.trim() &&
+        (item.role === 'customer' || item.role === 'admin')
+      ).slice(0, 8) : [];
+    } catch {
+      this.recentUsernames = [];
+    }
   }
 
   get currentYear(): number {
     return new Date().getFullYear();
   }
 
-  get navigation(): { label: string; page: PageName }[] {
+  get pageTitle(): string {
+    const titles: Record<PageName, string> = {
+      home: 'A fresh perspective', services: 'Our services', estimator: 'Price estimator',
+      orders: 'Order management', customer: 'My dashboard', admin: 'Business overview'
+    };
+    return titles[this.activePage];
+  }
+
+  get navigation(): { label: string; page: PageName; icon: string }[] {
     if (this.role === 'admin') {
       return [
-        { label: 'Dashboard', page: 'admin' },
-        { label: 'Services', page: 'services' },
-        { label: 'Price Estimator', page: 'estimator' },
-        { label: 'Order Management', page: 'orders' }
+        { label: 'Overview', page: 'admin', icon: 'grid-outline' },
+        { label: 'Services', page: 'services', icon: 'shirt-outline' },
+        { label: 'Estimator', page: 'estimator', icon: 'calculator-outline' },
+        { label: 'Orders', page: 'orders', icon: 'receipt-outline' }
       ];
     }
 
     if (this.role === 'customer') {
       return [
-        { label: 'Dashboard', page: 'customer' },
-        { label: 'Home', page: 'home' },
-        { label: 'Services', page: 'services' },
-        { label: 'Price Estimator', page: 'estimator' }
+        { label: 'Dashboard', page: 'customer', icon: 'grid-outline' },
+        { label: 'Home', page: 'home', icon: 'home-outline' },
+        { label: 'Services', page: 'services', icon: 'shirt-outline' },
+        { label: 'Estimator', page: 'estimator', icon: 'calculator-outline' }
       ];
     }
 
@@ -169,7 +338,7 @@ export class HomePage {
   selectService(service: LaundryService): void {
     this.selectedServiceId = service.id;
     this.quantity = 1;
-    this.activePage = 'estimator';
+    this.navigate('estimator');
   }
 
   get newOrderService(): LaundryService | undefined {
@@ -222,22 +391,23 @@ export class HomePage {
   }
 
   addOrder(): void {
+    this.fieldErrors = {};
     const name = this.newOrder.customerName.trim();
     const service = this.newOrderService;
     const amount = Number(this.newOrder.quantity);
 
     if (!name) {
-      alert('Please enter the customer name.');
-      return;
+      this.fieldErrors.orderCustomer = 'Enter the customer’s name.';
     }
-
-    if (!service || !Number.isFinite(amount) || amount <= 0) {
-      alert('Please enter a valid service and quantity.');
+    if (!service) this.fieldErrors.orderService = 'Choose a valid laundry service.';
+    if (!Number.isFinite(amount) || amount <= 0) this.fieldErrors.orderQuantity = 'Enter a quantity greater than zero.';
+    if (Object.keys(this.fieldErrors).length || !service) {
+      this.focusInvalidField();
       return;
     }
 
     this.createOrder(name, service, amount, this.newOrder.paymentMethod);
-    alert('Order successfully created.');
+    this.notify('Order successfully created.', 'success');
 
     this.newOrder = {
       customerName: '',
@@ -248,32 +418,40 @@ export class HomePage {
   }
 
   placeCustomerOrder(): void {
+    this.fieldErrors = {};
     if (!this.loggedIn || this.role !== 'customer') {
-      alert('Please log in as a customer.');
+      this.fieldErrors.estimatorService = 'Sign in as a customer to place an order.';
       return;
     }
 
     const service = this.selectedService;
     const amount = Number(this.quantity);
 
-    if (!service || !Number.isFinite(amount) || amount <= 0) {
-      alert('Please select a valid service and quantity.');
+    if (!service) this.fieldErrors.estimatorService = 'Choose a valid laundry service.';
+    if (!Number.isFinite(amount) || amount <= 0) this.fieldErrors.estimatorQuantity = 'Choose a quantity greater than zero.';
+    if (Object.keys(this.fieldErrors).length || !service) {
+      this.focusInvalidField();
       return;
     }
 
-    const confirmed = confirm(
-      `Confirm your order?\n\n` +
-      `Service: ${service.name}\n` +
-      `Quantity: ${amount} ${service.unit}\n` +
-      `Estimated total: ₱${this.estimatedTotal.toFixed(2)}`
-    );
-
-    if (!confirmed) return;
-
-    this.createOrder(this.currentCustomer, service, amount, 'Cash');
-    alert('Your laundry order has been placed successfully.');
-    this.resetEstimator();
-    this.activePage = 'customer';
+    const customerName = this.currentCustomer;
+    const selectedService = { ...service };
+    this.showFeedback({
+      kind: 'confirm',
+      title: 'Ready for a fresh start?',
+      message: 'Check your laundry details before placing your order.',
+      confirmLabel: 'Place order',
+      details: [
+        { label: 'Service', value: service.name },
+        { label: 'Quantity', value: `${amount} ${service.unit}` },
+        { label: 'Estimated total', value: `₱${(service.price * amount).toFixed(2)}` }
+      ]
+    }, () => {
+      this.createOrder(customerName, selectedService, amount, 'Cash');
+      this.notify('Your laundry order has been placed successfully.', 'success');
+      this.resetEstimator();
+      this.navigate('customer');
+    });
   }
 
   updateStatus(order: LaundryOrder, status: string): void {
@@ -292,9 +470,19 @@ export class HomePage {
   }
 
   deleteOrder(id: number): void {
-    if (!confirm('Are you sure you want to delete this order?')) return;
-    this.orders = this.orders.filter(order => order.id !== id);
-    this.saveOrders();
+    const order = this.orders.find(item => item.id === id);
+    if (!order) return;
+    this.showFeedback({
+      kind: 'confirm',
+      title: 'Delete this order?',
+      message: `This removes ${order.customerName}’s ${order.service} order. This action cannot be undone.`,
+      confirmLabel: 'Delete order',
+      destructive: true
+    }, () => {
+      this.orders = this.orders.filter(item => item.id !== id);
+      this.saveOrders();
+      this.notify('The order has been deleted.', 'success');
+    });
   }
 
   get customerOrders(): LaundryOrder[] {
@@ -412,24 +600,36 @@ export class HomePage {
   }
 
   chooseRole(role: UserRole): void {
+    this.fieldErrors = {};
+    this.closeUsernameSuggestions();
     this.selectedRole = role;
     this.authView = 'login';
     this.username = '';
     this.password = '';
   }
 
+  startBooking(): void {
+    this.chooseRole('customer');
+    requestAnimationFrame(() => this.host.nativeElement.querySelector<HTMLInputElement>('#login-username')?.focus());
+  }
+
   backToWelcome(): void {
+    this.fieldErrors = {};
+    this.closeUsernameSuggestions();
     this.authView = 'welcome';
     this.username = '';
     this.password = '';
   }
 
   showSignup(): void {
+    this.fieldErrors = {};
+    this.closeUsernameSuggestions();
     this.authView = 'signup';
     this.clearSignup();
   }
 
   backToLogin(): void {
+    this.fieldErrors = {};
     this.authView = 'login';
     this.clearSignup();
   }
@@ -442,35 +642,25 @@ export class HomePage {
   }
 
   signup(): void {
+    this.fieldErrors = {};
     const name = this.signupName.trim();
     const username = this.signupUsername.trim();
-
-    if (!name || !username || !this.signupPassword || !this.confirmPassword) {
-      alert('Please complete all registration fields.');
-      return;
-    }
-
-    if (username.length < 3) {
-      alert('Username must contain at least 3 characters.');
-      return;
-    }
-
-    if (this.signupPassword.length < 6) {
-      alert('Password must contain at least 6 characters.');
-      return;
-    }
-
-    if (this.signupPassword !== this.confirmPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-
     const usernameExists = this.registeredCustomers.some(
       account => account.username.toLowerCase() === username.toLowerCase()
     );
 
-    if (usernameExists || ['admin', 'customer', 'maria'].includes(username.toLowerCase())) {
-      alert('This username is already registered or reserved.');
+    if (!name) this.fieldErrors.signupName = 'Enter your full name.';
+    if (!username) this.fieldErrors.signupUsername = 'Enter a username.';
+    else if (username.length < 3) this.fieldErrors.signupUsername = 'Use at least 3 characters for your username.';
+    else if (usernameExists || ['admin', 'customer', 'maria'].includes(username.toLowerCase())) {
+      this.fieldErrors.signupUsername = 'This username is already registered or reserved.';
+    }
+    if (!this.signupPassword) this.fieldErrors.signupPassword = 'Enter a password.';
+    else if (this.signupPassword.length < 6) this.fieldErrors.signupPassword = 'Use at least 6 characters for your password.';
+    if (!this.confirmPassword) this.fieldErrors.confirmPassword = 'Confirm your password.';
+    else if (this.signupPassword !== this.confirmPassword) this.fieldErrors.confirmPassword = 'Your passwords do not match.';
+    if (Object.keys(this.fieldErrors).length) {
+      this.focusInvalidField();
       return;
     }
 
@@ -483,7 +673,7 @@ export class HomePage {
     this.registeredCustomers.push(newAccount);
     this.saveCustomerAccounts();
 
-    alert('Your free customer account has been created successfully.');
+    this.notify('Your free customer account has been created successfully.', 'success');
 
     this.username = username;
     this.password = '';
@@ -493,10 +683,13 @@ export class HomePage {
   }
 
   login(): void {
+    this.fieldErrors = {};
+    this.closeUsernameSuggestions();
     const enteredUsername = this.username.trim();
-
-    if (!enteredUsername || !this.password) {
-      alert('Please enter your username and password.');
+    if (!enteredUsername) this.fieldErrors.loginUsername = 'Enter your username.';
+    if (!this.password) this.fieldErrors.loginPassword = 'Enter your password.';
+    if (Object.keys(this.fieldErrors).length) {
+      this.focusInvalidField();
       return;
     }
 
@@ -505,10 +698,12 @@ export class HomePage {
         this.loggedIn = true;
         this.role = 'admin';
         this.currentCustomer = 'Administrator';
-        this.activePage = 'admin';
+        this.rememberUsername();
+        this.navigate('admin');
         this.authView = 'welcome';
       } else {
-        alert('Invalid administrator username or password.');
+        this.fieldErrors.loginPassword = 'Incorrect username or password. Please try again.';
+        this.focusInvalidField();
       }
       return;
     }
@@ -525,30 +720,34 @@ export class HomePage {
     );
 
     if (!account) {
-      alert('Customer account not found. Check your details or sign up.');
+      this.fieldErrors.loginPassword = 'Incorrect username or password. Please try again.';
+      this.focusInvalidField();
       return;
     }
 
     this.loggedIn = true;
     this.role = 'customer';
     this.currentCustomer = account.name;
-    this.activePage = 'customer';
+    this.rememberUsername();
+    this.navigate('customer');
     this.authView = 'welcome';
     this.newOrder.customerName = account.name;
   }
 
   logout(): void {
+    this.fieldErrors = {};
+    this.closeUsernameSuggestions();
     this.loggedIn = false;
     this.username = '';
     this.password = '';
     this.currentCustomer = '';
     this.role = '';
-    this.activePage = 'home';
+    this.navigate('home');
     this.authView = 'welcome';
   }
 
   goHome(): void {
-    this.activePage = this.role === 'admin' ? 'admin' : 'customer';
+    this.navigate(this.role === 'admin' ? 'admin' : 'customer');
   }
 
   saveOrders(): void {

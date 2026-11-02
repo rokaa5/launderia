@@ -1,720 +1,172 @@
-
-<ion-content [fullscreen]="true">
-  <div class="app-shell">
-
-    <!-- HEADER -->
-    <header class="site-header" *ngIf="loggedIn">
-      <a class="logo" (click)="goHome()">
-        LAUNDERIA
-        <small>Laundry Express</small>
-      </a>
-
-      <nav>
-        <button
-          *ngFor="let item of navigation"
-          [attr.aria-current]="activePage === item.page ? 'page' : null"
-          (click)="activePage = item.page">
-          {{ item.label }}
-        </button>
-      </nav>
-
-      <button class="btn alt logout-btn" (click)="logout()">
-        Logout
-      </button>
-    </header>
-
-    <!-- ACCOUNT SELECTION -->
-    <main *ngIf="!loggedIn && authView === 'welcome'">
-      <section class="auth-hero">
-        <p class="eyebrow">LAUNDRY MADE EASY</p>
-        <h1>Fresh clothes.<br>Fresh confidence.</h1>
-        <p class="auth-description">
-          Welcome to Launderia Laundry Express. Choose how you want
-          to access the system.
-        </p>
-
-        <div class="auth-choice-grid">
-          <article class="card auth-choice">
-            <div class="feature-icon">C</div>
-            <h2>Customer</h2>
-            <p>
-              Create an account, place laundry orders, and monitor
-              your order status.
-            </p>
-            <button class="btn" (click)="chooseRole('customer')">
-              Continue as Customer
-            </button>
-          </article>
-
-          <article class="card auth-choice">
-            <div class="feature-icon">A</div>
-            <h2>Administrator</h2>
-            <p>
-              Manage laundry orders, customers, payments, and
-              business sales records.
-            </p>
-            <button class="btn alt" (click)="chooseRole('admin')">
-              Continue as Admin
-            </button>
-          </article>
+<ion-content #pageContent [fullscreen]="true">
+  <div class="launderia" [class.signed-in]="loggedIn">
+    <ng-template #brand>
+      <span class="brand-mark" aria-hidden="true"><ion-icon name="water-outline"></ion-icon></span>
+      <span class="brand-name">launderia<span>LAUNDRY EXPRESS</span></span>
+    </ng-template>
+    <ng-template #serviceOverview>
+      <section class="service-overview" [class.guest-services]="!loggedIn" aria-label="Our laundry prices">
+        <div class="service-overview-intro">
+          <h2>Good care.<br>For every load.</h2>
+          <p>Find the right service for your everyday favorites and the pieces that need a little extra care.</p>
+          @if (!loggedIn) {
+            <button class="btn" type="button" (click)="startBooking()">Sign in to book <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>
+            <span class="service-access-note">Browse freely. Book when you’re ready.</span>
+          } @else {
+            <button class="text-button" type="button" (click)="navigate('services')">Explore our services <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>
+          }
         </div>
-
-        <p class="note">
-          New customer? Select Customer to create your free account.
-        </p>
-      </section>
-    </main>
-
-    <!-- LOGIN -->
-    <main *ngIf="!loggedIn && authView === 'login'">
-      <section class="auth-panel card">
-        <p class="eyebrow">
-          {{ selectedRole === 'admin' ? 'ADMINISTRATOR ACCESS' : 'CUSTOMER ACCESS' }}
-        </p>
-
-        <h2>
-          {{ selectedRole === 'admin' ? 'Admin Login' : 'Customer Login' }}
-        </h2>
-
-        <p class="muted">
-          Enter your username and password to continue.
-        </p>
-
-        <form class="auth-form" (ngSubmit)="login()">
-          <label>
-            Username
-            <input
-              type="text"
-              name="loginUsername"
-              [(ngModel)]="username"
-              placeholder="Enter your username"
-              autocomplete="username"
-              required>
-          </label>
-
-          <label>
-            Password
-            <input
-              type="password"
-              name="loginPassword"
-              [(ngModel)]="password"
-              placeholder="Enter your password"
-              autocomplete="current-password"
-              required>
-          </label>
-
-          <button class="btn full-btn" type="submit">
-            Login
-          </button>
-        </form>
-
-        <div class="auth-links" *ngIf="selectedRole === 'customer'">
-          <p>Don't have an account yet?</p>
-          <button class="text-btn" (click)="showSignup()">
-            Sign Up for Free
-          </button>
+        <div class="service-overview-list">
+          @for (service of services; track service.id) {
+            <article class="service-preview-row">
+              <div><h3>{{ service.name }}</h3><p>{{ service.description }}</p></div>
+              <span class="preview-price">₱{{ service.price }}<small>/ {{ service.unit }}</small></span>
+            </article>
+          }
         </div>
-
-        <button class="text-btn" (click)="backToWelcome()">
-          ← Back to account selection
-        </button>
       </section>
-    </main>
-
-    <!-- SIGN UP -->
-    <main *ngIf="!loggedIn && authView === 'signup'">
-      <section class="auth-panel card">
-        <p class="eyebrow">JOIN LAUNDERIA</p>
-        <h2>Create Your Free Account</h2>
-        <p class="muted">
-          Register as a customer to place and track your laundry orders.
-        </p>
-
-        <form class="auth-form" (ngSubmit)="signup()">
-          <label>
-            Full Name
-            <input
-              type="text"
-              name="signupName"
-              [(ngModel)]="signupName"
-              placeholder="Enter your full name"
-              required>
-          </label>
-
-          <label>
-            Username
-            <input
-              type="text"
-              name="signupUsername"
-              [(ngModel)]="signupUsername"
-              placeholder="Create a username"
-              required>
-          </label>
-
-          <label>
-            Password
-            <input
-              type="password"
-              name="signupPassword"
-              [(ngModel)]="signupPassword"
-              placeholder="At least 6 characters"
-              required>
-          </label>
-
-          <label>
-            Confirm Password
-            <input
-              type="password"
-              name="confirmPassword"
-              [(ngModel)]="confirmPassword"
-              placeholder="Re-enter your password"
-              required>
-          </label>
-
-          <button class="btn full-btn" type="submit">
-            Create Free Account
-          </button>
-        </form>
-
-        <button class="text-btn" (click)="backToLogin()">
-          ← Back to Customer Login
-        </button>
-      </section>
-    </main>
-
-    <!-- APPLICATION -->
-    <main *ngIf="loggedIn">
-
-      <!-- HOME -->
-      <section *ngIf="activePage === 'home'">
-        <section class="hero">
-          <div>
-            <p class="eyebrow">WELCOME TO LAUNDERIA</p>
-            <h1>Fresh clothes, more time for you.</h1>
-            <p>
-              Reliable and convenient laundry services designed to
-              make your everyday life easier.
-            </p>
-
-            <div class="btns">
-              <button
-                class="btn"
-                (click)="activePage = role === 'admin' ? 'orders' : 'estimator'">
-                {{ role === 'admin' ? 'Manage Orders' : 'Place an Order' }}
-              </button>
-              <button class="btn alt" (click)="activePage = 'services'">
-                View Services
-              </button>
-            </div>
-          </div>
-
-          <aside class="tag">
-            <h3>Our Services</h3>
-            <ul>
-              <li><span>Wash and Dry</span><b>₱35/kg</b></li>
-              <li><span>Wash, Dry and Fold</span><b>₱45/kg</b></li>
-              <li><span>Dry Cleaning</span><b>₱100/load</b></li>
-              <li><span>Ironing</span><b>₱25/piece</b></li>
-            </ul>
-            <p class="tag-note">
-              Quality laundry care you can trust.
-            </p>
-          </aside>
+    </ng-template>
+    @if (!loggedIn) {
+      <header class="guest-header">
+        <button class="brand" type="button" aria-label="Launderia home" (click)="backToWelcome()"><ng-container [ngTemplateOutlet]="brand"></ng-container></button>
+        <span class="header-note">A little care. A lot of fresh.</span>
+        <span class="small-stamp"><ion-icon name="sparkles-outline" aria-hidden="true"></ion-icon> Fresh days ahead</span>
+      </header>
+      <main class="auth-layout">
+        <section class="brand-story">
+          <span class="story-kicker">MAKE ROOM FOR THE GOOD STUFF</span>
+          <h1>Less laundry.<br>More <span>lovely days.</span></h1>
+          <p>We’ll take care of the laundry.<br>You take care of living.</p>
+          <img class="laundry-art" src="assets/illustrations/laundry-day.svg" alt="A cheerful washing machine with freshly folded laundry" width="720" height="460">
+          <div class="story-bottom"><span>Clean clothes. Clear mind.</span><span class="round-arrow" aria-hidden="true">↗</span></div>
         </section>
-
-        <section class="feature-section">
-          <p class="eyebrow">WHY CHOOSE US</p>
-          <h2>Laundry made convenient</h2>
-
-          <div class="grid">
-            <article class="card">
-              <span class="feature-icon">01</span>
-              <h3>Easy Ordering</h3>
-              <p>
-                Place your laundry order conveniently through the system.
-              </p>
-            </article>
-
-            <article class="card">
-              <span class="feature-icon">02</span>
-              <h3>Order Tracking</h3>
-              <p>
-                Monitor your laundry status from received to completed.
-              </p>
-            </article>
-
-            <article class="card">
-              <span class="feature-icon">03</span>
-              <h3>Affordable Services</h3>
-              <p>
-                Check service prices and estimate your laundry expenses.
-              </p>
-            </article>
-          </div>
-        </section>
-      </section>
-
-      <!-- SERVICES -->
-      <section *ngIf="activePage === 'services'">
-        <p class="eyebrow">WHAT WE OFFER</p>
-        <h1>Our Laundry Services</h1>
-        <p>Choose the service that fits your laundry needs.</p>
-
-        <div class="grid">
-          <article
-            class="card service-card"
-            *ngFor="let service of services">
-
-            <span class="feature-icon">{{ service.id }}</span>
-            <h3>{{ service.name }}</h3>
-            <p>{{ service.description }}</p>
-
-            <h2 class="service-price">
-              ₱{{ service.price }}
-              <small>/ {{ service.unit }}</small>
-            </h2>
-
-            <button class="btn" (click)="selectService(service)">
-              Select Service
-            </button>
-          </article>
-        </div>
-      </section>
-
-      <!-- PRICE ESTIMATOR -->
-      <section *ngIf="activePage === 'estimator'">
-        <p class="eyebrow">PLAN YOUR LAUNDRY</p>
-        <h1>Price Estimator</h1>
-        <p>Calculate the estimated cost of your laundry service.</p>
-
-        <div class="calc">
-          <section class="card">
-            <h3>Select a Service</h3>
-
-            <label class="field-label">
-              Laundry Service
-              <select [(ngModel)]="selectedServiceId">
-                <option
-                  *ngFor="let service of services"
-                  [ngValue]="service.id">
-                  {{ service.name }} — ₱{{ service.price }}/{{ service.unit }}
-                </option>
-              </select>
-            </label>
-
-            <div class="row">
+        <section class="auth-content">
+          @if (authView === 'welcome') {
+            <div class="auth-intro"><span class="eyebrow">HELLO, THERE</span><h2>Make yourself<br>at home.</h2><p>A fresher day starts here.<br>How would you like to join us?</p></div>
+            <article class="role-option customer-option"><span class="role-icon"><ion-icon name="shirt-outline" aria-hidden="true"></ion-icon></span><div><h3>Here for a fresh start?</h3><p>Book your laundry and follow every fold.</p></div><button class="btn" type="button" (click)="chooseRole('customer')">I’m a customer <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button></article>
+            <article class="role-option admin-option"><span class="role-icon"><ion-icon name="grid-outline" aria-hidden="true"></ion-icon></span><div><h3>Behind the fresh.</h3><p>Your orders, customers, and daily overview.</p></div><button class="text-button" type="button" (click)="chooseRole('admin')">Administrator access <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button></article>
+            <p class="auth-footnote">New around here? Customer accounts are always free.</p>
+          } @else if (authView === 'login') {
+            <button class="back-button" type="button" (click)="backToWelcome()"><ion-icon name="arrow-back-outline" aria-hidden="true"></ion-icon> Back to welcome</button>
+            <div class="auth-intro"><span class="eyebrow">{{ selectedRole === 'admin' ? 'BEHIND THE FRESH' : 'YOUR FRESH START' }}</span><h2>Welcome<br>back.</h2><p>{{ selectedRole === 'admin' ? 'A good day starts with a little overview.' : 'Your laundry is in good hands.' }}</p></div>
+            <form class="auth-form" (ngSubmit)="login()" autocomplete="off" novalidate>
+              <div class="username-field">
+                <label for="login-username">Username</label>
+                <input id="login-username" type="text" name="launderiaLoginUsername" [ngModel]="username" (ngModelChange)="onUsernameInput($event)"
+                  (focus)="usernameSuggestionsOpen = username.trim().length > 0" (blur)="closeUsernameSuggestions()" (keydown)="onUsernameKeydown($event)"
+                  role="combobox" aria-autocomplete="list" aria-controls="username-suggestions" [attr.aria-expanded]="usernameSuggestions.length > 0"
+                  [attr.aria-activedescendant]="activeUsernameSuggestion >= 0 ? 'username-option-' + activeUsernameSuggestion : null"
+                  [attr.aria-invalid]="fieldErrors.loginUsername ? 'true' : null" [attr.aria-describedby]="fieldErrors.loginUsername ? 'login-username-error' : null"
+                  placeholder="Enter your username" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+                @if (usernameSuggestions.length) {
+                  <div class="username-dropdown">
+                    <span class="suggestion-caption">Suggested usernames</span>
+                    <ul id="username-suggestions" role="listbox" aria-label="Username suggestions">
+                      @for (suggestion of usernameSuggestions; track suggestion; let index = $index) {
+                        <li role="option" [id]="'username-option-' + index" [attr.aria-selected]="activeUsernameSuggestion === index">
+                          <button type="button" tabindex="-1" (pointerdown)="$event.preventDefault()" (click)="selectUsername(suggestion)">
+                            <span class="suggestion-avatar" aria-hidden="true">{{ suggestion.charAt(0).toUpperCase() }}</span>
+                            <span>{{ suggestion }}</span><ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+                          </button>
+                        </li>
+                      }
+                    </ul>
+                    <span class="suggestion-help">Use ↑ ↓ to choose, then Enter</span>
+                  </div>
+                }
+                @if (fieldErrors.loginUsername) {<p class="field-error" id="login-username-error" aria-live="polite">{{ fieldErrors.loginUsername }}</p>}
+              </div>
               <div>
-                <strong>Quantity</strong>
-                <small>{{ selectedService?.unit || 'unit' }}</small>
+                <label for="login-password">Password</label>
+                <input id="login-password" type="password" name="loginPassword" [(ngModel)]="password" (ngModelChange)="clearFieldError('loginPassword')"
+                  [attr.aria-invalid]="fieldErrors.loginPassword ? 'true' : null" [attr.aria-describedby]="fieldErrors.loginPassword ? 'login-password-error' : null"
+                  placeholder="Enter your password" autocomplete="current-password" required>
+                @if (fieldErrors.loginPassword) {<p class="field-error" id="login-password-error" aria-live="polite">{{ fieldErrors.loginPassword }}</p>}
               </div>
-
-              <div class="step">
-                <button type="button" (click)="changeQuantity(-1)">−</button>
-                <output>{{ quantity }}</output>
-                <button type="button" (click)="changeQuantity(1)">+</button>
-              </div>
-            </div>
-
-            <p class="note">
-              This is an estimated price. Final charges may be confirmed
-              by the laundry administrator.
-            </p>
-          </section>
-
-          <aside class="card total">
-            <p class="eyebrow">ESTIMATED TOTAL</p>
-            <div class="big">
-              ₱{{ estimatedTotal | number:'1.2-2' }}
-            </div>
-
-            <dl>
-              <dt>Service</dt>
-              <dd>{{ selectedService?.name }}</dd>
-
-              <dt>Quantity</dt>
-              <dd>{{ quantity }} {{ selectedService?.unit }}</dd>
-
-              <dt>Rate</dt>
-              <dd>₱{{ selectedService?.price }}</dd>
-            </dl>
-
-            <button
-              *ngIf="role === 'customer'"
-              class="btn full-btn"
-              (click)="placeCustomerOrder()">
-              Confirm Order
-            </button>
-
-            <p *ngIf="role === 'admin'" class="note">
-              Customer orders can be created in the Order Management page.
-            </p>
-
-            <button class="text-btn" (click)="resetEstimator()">
-              Reset Calculator
-            </button>
-          </aside>
-        </div>
-      </section>
-
-      <!-- ADMIN ORDER MANAGEMENT -->
-      <section *ngIf="activePage === 'orders' && role === 'admin'">
-        <p class="eyebrow">ADMINISTRATION</p>
-        <h1>Order Management</h1>
-        <p>Create, search, update, and manage customer orders.</p>
-
-        <div class="order-layout">
-          <section class="card order-form">
-            <h3>Create New Order</h3>
-
-            <form (ngSubmit)="addOrder()">
-              <label>
-                Customer Name
-                <input
-                  type="text"
-                  name="orderCustomer"
-                  [(ngModel)]="newOrder.customerName"
-                  placeholder="Enter customer name"
-                  required>
-              </label>
-
-              <label>
-                Laundry Service
-                <select
-                  name="orderService"
-                  [(ngModel)]="newOrder.serviceId">
-                  <option
-                    *ngFor="let service of services"
-                    [ngValue]="service.id">
-                    {{ service.name }}
-                  </option>
-                </select>
-              </label>
-
-              <label>
-                Quantity
-                <input
-                  type="number"
-                  name="orderQuantity"
-                  min="1"
-                  step="1"
-                  [(ngModel)]="newOrder.quantity"
-                  required>
-              </label>
-
-              <label>
-                Payment Method
-                <select
-                  name="orderPaymentMethod"
-                  [(ngModel)]="newOrder.paymentMethod">
-                  <option value="Cash">Cash</option>
-                  <option value="GCash">GCash</option>
-                  <option value="Maya">Maya</option>
-                </select>
-              </label>
-
-              <p class="notice">
-                Estimated total:
-                ₱{{ newOrderTotal | number:'1.2-2' }}
-              </p>
-
-              <button class="btn full-btn" type="submit">
-                Add Order
-              </button>
+              <button class="btn wide" type="submit">{{ selectedRole === 'admin' ? 'Open my workspace' : 'Let’s get fresh' }} <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>
             </form>
-          </section>
-
-          <section class="card">
-            <div class="list-heading">
-              <h3>Customer Orders</h3>
-              <span>{{ filteredOrders.length }} records</span>
-            </div>
-
-            <input
-              class="search"
-              type="search"
-              [(ngModel)]="searchText"
-              placeholder="Search customer, service, or order ID">
-
-            <div *ngIf="filteredOrders.length === 0" class="empty">
-              No orders found.
-            </div>
-
-            <article
-              class="order-record"
-              *ngFor="let order of filteredOrders">
-
-              <div class="record-top">
-                <div>
-                  <strong>{{ order.customerName }}</strong>
-                  <small>Order #{{ order.id }}</small>
-                </div>
-                <b>₱{{ order.total | number:'1.2-2' }}</b>
+            @if (selectedRole === 'customer') {<div class="signup-prompt"><span>First time here?</span><button class="text-button" type="button" (click)="showSignup()">Create a free account <span aria-hidden="true">↗</span></button></div>}
+          } @else {
+            <button class="back-button" type="button" (click)="backToLogin()"><ion-icon name="arrow-back-outline" aria-hidden="true"></ion-icon> Back to sign in</button>
+            <div class="auth-intro compact"><span class="eyebrow">A FRESH CHAPTER</span><h2>Nice to<br>meet you.</h2><p>A little less laundry starts with an account.</p></div>
+            <form class="auth-form" (ngSubmit)="signup()" novalidate>
+              <div><label for="signup-name">Full name</label><input id="signup-name" type="text" name="signupName" [(ngModel)]="signupName" (ngModelChange)="clearFieldError('signupName')" [attr.aria-invalid]="fieldErrors.signupName ? 'true' : null" [attr.aria-describedby]="fieldErrors.signupName ? 'signup-name-error' : null" placeholder="What should we call you?" autocomplete="name" required>@if (fieldErrors.signupName) {<p class="field-error" id="signup-name-error" aria-live="polite">{{ fieldErrors.signupName }}</p>}</div>
+              <div><label for="signup-username">Username</label><input id="signup-username" type="text" name="signupUsername" [(ngModel)]="signupUsername" (ngModelChange)="clearFieldError('signupUsername')" [attr.aria-invalid]="fieldErrors.signupUsername ? 'true' : null" [attr.aria-describedby]="fieldErrors.signupUsername ? 'signup-username-error' : null" placeholder="Choose a username" autocomplete="username" autocapitalize="none" required>@if (fieldErrors.signupUsername) {<p class="field-error" id="signup-username-error" aria-live="polite">{{ fieldErrors.signupUsername }}</p>}</div>
+              <div class="form-pair">
+                <div><label for="signup-password">Password</label><input id="signup-password" type="password" name="signupPassword" [(ngModel)]="signupPassword" (ngModelChange)="clearFieldError('signupPassword'); clearFieldError('confirmPassword')" [attr.aria-invalid]="fieldErrors.signupPassword ? 'true' : null" [attr.aria-describedby]="fieldErrors.signupPassword ? 'signup-password-error' : null" placeholder="6+ characters" autocomplete="new-password" required>@if (fieldErrors.signupPassword) {<p class="field-error" id="signup-password-error" aria-live="polite">{{ fieldErrors.signupPassword }}</p>}</div>
+                <div><label for="signup-confirm">Confirm password</label><input id="signup-confirm" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" (ngModelChange)="clearFieldError('confirmPassword')" [attr.aria-invalid]="fieldErrors.confirmPassword ? 'true' : null" [attr.aria-describedby]="fieldErrors.confirmPassword ? 'signup-confirm-error' : null" placeholder="One more time" autocomplete="new-password" required>@if (fieldErrors.confirmPassword) {<p class="field-error" id="signup-confirm-error" aria-live="polite">{{ fieldErrors.confirmPassword }}</p>}</div>
               </div>
-
-              <p>
-                {{ order.service }} ·
-                {{ order.quantity }} {{ order.unit }}
-              </p>
-              <p>Order date: {{ order.date }}</p>
-
-              <div class="record-controls">
-                <label>
-                  Order Status
-                  <select
-                    [ngModel]="order.status"
-                    [ngModelOptions]="{standalone: true}"
-                    (ngModelChange)="updateStatus(order, $event)">
-                    <option value="Received">Received</option>
-                    <option value="Washing">Washing</option>
-                    <option value="Ready for Pickup">Ready for Pickup</option>
-                    <option value="Completed">Completed</option>
-                  </select>
-                </label>
-
-                <label>
-                  Payment Method
-                  <select
-                    [ngModel]="order.paymentMethod"
-                    [ngModelOptions]="{standalone: true}"
-                    (ngModelChange)="updatePaymentMethod(order, $event)">
-                    <option value="Cash">Cash</option>
-                    <option value="GCash">GCash</option>
-                    <option value="Maya">Maya</option>
-                  </select>
-                </label>
-
-                <button
-                  class="payment-btn"
-                  [class.paid]="order.payment === 'Paid'"
-                  (click)="togglePayment(order)">
-                  {{ order.payment === 'Paid' ? 'Paid' : 'Mark Paid' }}
-                </button>
-
-                <button
-                  class="delete-btn"
-                  (click)="deleteOrder(order.id)">
-                  Delete
-                </button>
-              </div>
-
-              <p>
-                Payment status:
-                <strong>{{ order.payment }}</strong>
-              </p>
-            </article>
-          </section>
-        </div>
-      </section>
-
-      <!-- CUSTOMER DASHBOARD -->
-      <section *ngIf="activePage === 'customer' && role === 'customer'">
-        <p class="eyebrow">CUSTOMER PORTAL</p>
-        <h1>My Dashboard</h1>
-        <p>Welcome back, {{ currentCustomer }}.</p>
-
-        <div class="stats">
-          <article class="card stat">
-            <span>Total Orders</span>
-            <strong>{{ customerOrders.length }}</strong>
-          </article>
-
-          <article class="card stat">
-            <span>Completed</span>
-            <strong>{{ customerCompletedOrders }}</strong>
-          </article>
-
-          <article class="card stat">
-            <span>In Progress</span>
-            <strong>{{ customerActiveOrders }}</strong>
-          </article>
-
-          <article class="card stat">
-            <span>Loyalty Points</span>
-            <strong>{{ loyaltyPoints }}</strong>
-          </article>
-        </div>
-
-        <section class="card">
-          <div class="list-heading">
-            <h3>Order Tracking</h3>
-            <span>{{ customerOrders.length }} orders</span>
-          </div>
-
-          <div *ngIf="customerOrders.length === 0" class="empty">
-            You have no orders yet.
-            <button
-              class="text-btn"
-              (click)="activePage = 'estimator'">
-              Place your first order
-            </button>
-          </div>
-
-          <article
-            class="order-record"
-            *ngFor="let order of customerOrders">
-
-            <div class="record-top">
-              <div>
-                <strong>{{ order.service }}</strong>
-                <small>Order #{{ order.id }}</small>
-              </div>
-              <b>₱{{ order.total | number:'1.2-2' }}</b>
-            </div>
-
-            <p>
-              {{ order.quantity }} {{ order.unit }} · {{ order.date }}
-            </p>
-            <p>Order status: <strong>{{ order.status }}</strong></p>
-            <p>Payment: <strong>{{ order.payment }}</strong></p>
-            <p>Payment method: {{ order.paymentMethod }}</p>
-          </article>
+              <button class="btn wide" type="submit">Create my account <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>
+            </form>
+          }
         </section>
-
-        <section class="card">
-          <h3>Transaction History</h3>
-
-          <div *ngIf="customerOrders.length === 0" class="empty">
-            No transactions available.
-          </div>
-
-          <div class="row" *ngFor="let order of customerOrders">
-            <div>
-              <strong>Order #{{ order.id }}</strong>
-              <small>{{ order.date }} · {{ order.service }}</small>
+      </main>
+      <ng-container [ngTemplateOutlet]="serviceOverview"></ng-container>
+      <footer class="guest-footer"><span>© {{ currentYear }} Launderia Laundry Express</span><span>Made for your everyday.</span></footer>
+    } @else {
+      <aside class="sidebar">
+        <button class="brand" type="button" aria-label="Launderia dashboard" (click)="goHome()"><ng-container [ngTemplateOutlet]="brand"></ng-container></button>
+        <span class="workspace-label">{{ role === 'admin' ? 'YOUR WORKSPACE' : 'YOUR LITTLE LAUNDRY CORNER' }}</span>
+        <nav aria-label="Main navigation">@for (item of navigation; track item.page) {<button type="button" [attr.aria-current]="activePage === item.page ? 'page' : null" (click)="navigate(item.page)"><ion-icon [name]="item.icon" aria-hidden="true"></ion-icon><span>{{ item.label }}</span><span class="nav-arrow" aria-hidden="true">↗</span></button>}</nav>
+        <div class="sidebar-note"><ion-icon name="leaf-outline" aria-hidden="true"></ion-icon><p>A little less laundry.<br>A little more you.</p><span>We’ll handle the fresh.</span></div>
+        <button class="logout-button" type="button" (click)="logout()"><ion-icon name="log-out-outline" aria-hidden="true"></ion-icon> Sign out</button>
+      </aside>
+      <div class="workspace">
+        <header class="workspace-header"><div><span class="eyebrow">{{ role === 'admin' ? 'LAUNDERIA WORKSPACE' : 'WELCOME TO YOUR FRESH SPACE' }}</span><span class="current-page">{{ pageTitle }}</span></div><div class="account"><span class="avatar">{{ currentCustomer.charAt(0) }}</span><div><strong>{{ currentCustomer }}</strong><small>{{ role === 'admin' ? 'Administrator' : 'Customer' }}</small></div></div></header>
+        <main class="workspace-main" id="main-content">
+          @if (activePage === 'customer' && role === 'customer') {
+            <section class="dashboard-banner"><div><span class="eyebrow">YOUR EVERYDAY, MADE LIGHTER</span><h1>Fresh looks good<br>on you.</h1><p>Hi, {{ currentCustomer }}. Let’s take laundry off your list.</p><button class="btn" type="button" (click)="navigate('estimator')">Place an order <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button></div><img src="assets/illustrations/laundry-day.svg" alt="" width="720" height="460"></section>
+            <section class="stats" aria-label="Your laundry overview"><article class="stat"><span>Total orders</span><strong>{{ customerOrders.length }}</strong><small>Every fresh start</small></article><article class="stat"><span>In progress</span><strong>{{ customerActiveOrders }}</strong><small>A little care in the making</small></article><article class="stat"><span>Completed</span><strong>{{ customerCompletedOrders }}</strong><small>Fresh, folded, finished</small></article><article class="stat green-stat"><span>Loyalty points <ion-icon name="leaf-outline" aria-hidden="true"></ion-icon></span><strong>{{ loyaltyPoints }}</strong><small>A little thank-you from us</small></article></section>
+            <div class="dashboard-columns">
+              <section class="panel"><div class="section-heading"><div><span class="eyebrow">FROM DROP-OFF TO PICKUP</span><h2>Your laundry, lately.</h2></div><span class="count">{{ customerOrders.length }} orders</span></div>
+                @for (order of customerOrders; track order.id) {<article class="order-card"><div class="record-heading"><span class="order-icon"><ion-icon name="shirt-outline" aria-hidden="true"></ion-icon></span><div><h3>{{ order.service }}</h3><span class="subtle">#{{ order.id }} · {{ order.date | date:'MMM d, y' }}</span></div><strong class="order-price">₱{{ order.total | number:'1.2-2' }}</strong></div><div class="order-info"><span>{{ order.quantity }} {{ order.unit }}</span><span class="status" [class.completed]="order.status === 'Completed'">{{ order.status }}</span><span>{{ order.payment }} · {{ order.paymentMethod }}</span></div></article>} @empty {<div class="empty-state"><span class="empty-symbol"><ion-icon name="shirt-outline" aria-hidden="true"></ion-icon></span><h3>A clean slate.</h3><p>Your laundry journey starts with your first order.</p><button class="text-button" type="button" (click)="navigate('estimator')">Let’s get started <span aria-hidden="true">↗</span></button></div>}
+              </section>
+              <section class="panel history-panel"><span class="eyebrow">THE LITTLE DETAILS</span><h2>Transaction history</h2>@for (order of customerOrders; track order.id) {<div class="history-row"><span><strong>{{ order.service }}</strong><small>{{ order.date | date:'MMM d' }} · {{ order.payment }}</small></span><b>₱{{ order.total | number:'1.2-2' }}</b></div>} @empty {<p class="quiet-message">Your transactions will find a home here once you place an order.</p>}<div class="care-note"><ion-icon name="sparkles-outline" aria-hidden="true"></ion-icon><p>Good things take a little care.<br>We’ll keep you in the loop.</p></div></section>
             </div>
-            <strong>₱{{ order.total | number:'1.2-2' }}</strong>
-          </div>
-        </section>
-
-        <button class="btn" (click)="activePage = 'estimator'">
-          Place Another Order
-        </button>
-      </section>
-
-      <!-- ADMIN DASHBOARD -->
-      <section *ngIf="activePage === 'admin' && role === 'admin'">
-        <p class="eyebrow">ADMINISTRATION</p>
-        <h1>Admin Dashboard</h1>
-        <p>Monitor your laundry business performance and records.</p>
-
-        <div class="stats">
-          <article class="card stat">
-            <span>Total Orders</span>
-            <strong>{{ orders.length }}</strong>
-          </article>
-
-          <article class="card stat">
-            <span>Completed Orders</span>
-            <strong>{{ completedOrders }}</strong>
-          </article>
-
-          <article class="card stat">
-            <span>Pending Orders</span>
-            <strong>{{ pendingOrders }}</strong>
-          </article>
-
-          <article class="card stat">
-            <span>Unpaid Orders</span>
-            <strong>{{ unpaidOrders }}</strong>
-          </article>
-        </div>
-
-        <div class="grid">
-          <article class="card stat">
-            <span>Total Collected Revenue</span>
-            <strong>₱{{ totalRevenue | number:'1.2-2' }}</strong>
-          </article>
-
-          <article class="card stat">
-            <span>Unpaid Amount</span>
-            <strong>₱{{ unpaidRevenue | number:'1.2-2' }}</strong>
-          </article>
-
-          <article class="card stat">
-            <span>Registered Customers</span>
-            <strong>{{ registeredCustomers.length }}</strong>
-          </article>
-        </div>
-
-        <section class="card">
-          <h3>Monthly Sales</h3>
-          <p class="note">
-            Revenue from orders marked as paid.
-          </p>
-
-          <div class="sales-chart">
-            <div
-              class="sales-column"
-              *ngFor="let sale of monthlySales">
-              <span class="sales-value">
-                ₱{{ sale.total | number:'1.0-0' }}
-              </span>
-              <div
-                class="sales-bar"
-                [style.height.%]="sale.height">
-              </div>
-              <small>{{ sale.month }}</small>
+          }
+          @if (activePage === 'admin' && role === 'admin') {
+            <section class="page-heading"><div><span class="eyebrow">A GOOD DAY STARTS HERE</span><h1>A fresh overview.</h1><p>A little clarity for everything behind the clean.</p></div><button class="btn" type="button" (click)="navigate('orders')">Manage orders <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button></section>
+            <section class="stats" aria-label="Business overview"><article class="stat"><span>Total orders</span><strong>{{ orders.length }}</strong><small>{{ completedOrders }} completed</small></article><article class="stat green-stat"><span>Collected revenue</span><strong class="money">₱{{ totalRevenue | number:'1.2-2' }}</strong><small>From paid orders</small></article><article class="stat vanilla-stat"><span>Orders in progress</span><strong>{{ pendingOrders }}</strong><small>On their way to fresh</small></article><article class="stat"><span>Unpaid amount</span><strong class="money">₱{{ unpaidRevenue | number:'1.2-2' }}</strong><small>{{ unpaidOrders }} awaiting payment</small></article></section>
+            <div class="dashboard-columns">
+              <section class="panel"><div class="section-heading"><div><span class="eyebrow">THE BIGGER PICTURE</span><h2>Monthly sales</h2></div><span class="subtle">Last six months · paid orders</span></div><div class="sales-chart" role="group" aria-label="Monthly collected revenue for the last six months"><div class="chart-grid" aria-hidden="true"></div>@for (sale of monthlySales; track sale.month) {<div class="sales-column"><span>₱{{ sale.total | number:'1.2-2' }}</span><div class="bar-track"><div class="sales-bar" [style.height.%]="sale.height"></div></div><small>{{ sale.month }}</small></div>}</div></section>
+              <section class="panel"><div class="section-heading"><div><span class="eyebrow">A LITTLE FOLLOW-UP</span><h2>Pending payments</h2></div><span class="count">{{ unpaidOrders }}</span></div>@for (order of unpaidOrderList; track order.id) {<div class="payment-row"><div><strong>{{ order.customerName }}</strong><small>#{{ order.id }} · {{ order.service }} · {{ order.paymentMethod }}</small><b>₱{{ order.total | number:'1.2-2' }}</b></div><button class="small-button" type="button" (click)="togglePayment(order)">Mark paid</button></div>} @empty {<div class="empty-state compact-empty"><ion-icon name="checkmark-outline" aria-hidden="true"></ion-icon><h3>All caught up.</h3><p>No payments waiting on your list.</p></div>}</section>
             </div>
-          </div>
-        </section>
-
-        <section class="card">
-          <h3>Pending Payments</h3>
-
-          <div *ngIf="unpaidOrderList.length === 0" class="empty">
-            No pending payments.
-          </div>
-
-          <article
-            class="order-record"
-            *ngFor="let order of unpaidOrderList">
-            <div class="record-top">
-              <div>
-                <strong>{{ order.customerName }}</strong>
-                <small>Order #{{ order.id }}</small>
-              </div>
-              <b>₱{{ order.total | number:'1.2-2' }}</b>
+            <section class="panel customer-records"><div class="section-heading"><div><span class="eyebrow">FAMILIAR FACES</span><h2>Our customers</h2></div><span class="count">{{ registeredCustomers.length }} registered</span></div>@for (customer of customerRecords; track customer.name) {<div class="customer-row"><span class="avatar">{{ customer.name.charAt(0) }}</span><div><strong>{{ customer.name }}</strong><small>{{ customer.orders }} order(s)</small></div><strong>₱{{ customer.spending | number:'1.2-2' }}</strong></div>} @empty {<p class="quiet-message">Customer records will appear here when your first order comes in.</p>}</section>
+          }
+          @if (activePage === 'home') {
+            <section class="dashboard-banner home-banner"><div><span class="eyebrow">CARE FOR YOUR CLOTHES. TIME FOR YOU.</span><h1>A fresh load.<br>A lighter day.</h1><p>From your everyday favorites to the pieces you love most, a little good care goes a long way.</p><div class="button-row"><button class="btn" type="button" (click)="navigate(role === 'admin' ? 'orders' : 'estimator')">{{ role === 'admin' ? 'Manage orders' : 'Place an order' }} <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button><button class="text-button" type="button" (click)="navigate('services')">Explore our services ↗</button></div></div><img src="assets/illustrations/laundry-day.svg" alt="Fresh laundry with a cheerful washing machine" width="720" height="460"></section>
+            <ng-container [ngTemplateOutlet]="serviceOverview"></ng-container>
+            <section class="how-it-works"><div class="section-heading"><div><span class="eyebrow">LESS ON YOUR LIST</span><h2>Simple from the start.</h2></div></div><div class="steps-grid"><article><span>01</span><h3>Pick your care.</h3><p>Choose the service your clothes need and get a clear price estimate.</p></article><article><span>02</span><h3>Leave it with us.</h3><p>Place your order and let our team take care of the laundry.</p></article><article><span>03</span><h3>Follow the fresh.</h3><p>Check your dashboard for every step, from received to ready.</p></article></div></section>
+          }
+          @if (activePage === 'services') {
+            <section class="page-heading"><div><span class="eyebrow">GOOD CARE FOR EVERY LOAD</span><h1>Find your kind<br>of fresh.</h1><p>Everyday essentials or something special. We’ve got a service for it.</p></div><span class="heading-doodle" aria-hidden="true"><ion-icon name="shirt-outline"></ion-icon></span></section>
+            <section class="services-list" aria-label="Laundry services">@for (service of services; track service.id) {<article class="service-row"><div class="service-description"><h2>{{ service.name }}</h2><p>{{ service.description }}</p></div><div class="service-price">₱{{ service.price }}<small>/ {{ service.unit }}</small></div><button class="icon-button" type="button" [attr.aria-label]="'Select ' + service.name" (click)="selectService(service)"><ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button></article>}</section>
+            <div class="bottom-note"><ion-icon name="leaf-outline" aria-hidden="true"></ion-icon><p>A little care goes a long way. Select a service to estimate your total.</p></div>
+          }
+          @if (activePage === 'estimator') {
+            <section class="page-heading"><div><span class="eyebrow">NO GUESSWORK. JUST FRESH.</span><h1>Your laundry.<br>Your little estimate.</h1><p>Choose your care, tell us how much, and we’ll do the math.</p></div></section>
+            <div class="estimator-layout"><section class="panel estimator-form"><span class="step-label">CHOOSE YOUR CARE</span><label for="estimator-service">Laundry service</label><select id="estimator-service" [(ngModel)]="selectedServiceId" (ngModelChange)="clearFieldError('estimatorService')" [attr.aria-invalid]="fieldErrors.estimatorService ? 'true' : null" [attr.aria-describedby]="fieldErrors.estimatorService ? 'estimator-service-error' : null">@for (service of services; track service.id) {<option [ngValue]="service.id">{{ service.name }} — ₱{{ service.price }}/{{ service.unit }}</option>}</select>@if (fieldErrors.estimatorService) {<p class="field-error" id="estimator-service-error" aria-live="polite">{{ fieldErrors.estimatorService }}</p>}<p class="service-hint">{{ selectedService?.description }}</p><div class="quantity-row"><div><span class="step-label">HOW MUCH?</span><h3>Quantity <small>({{ selectedService?.unit }})</small></h3></div><div class="quantity-stepper" role="group" aria-label="Quantity controls" tabindex="-1" [attr.aria-invalid]="fieldErrors.estimatorQuantity ? 'true' : null" [attr.aria-describedby]="fieldErrors.estimatorQuantity ? 'estimator-quantity-error' : null"><button type="button" aria-label="Decrease quantity" [disabled]="quantity <= 1" (click)="changeQuantity(-1)"><ion-icon name="remove-outline" aria-hidden="true"></ion-icon></button><output aria-live="polite" aria-label="Quantity">{{ quantity }}</output><button type="button" aria-label="Increase quantity" (click)="changeQuantity(1)"><ion-icon name="add-outline" aria-hidden="true"></ion-icon></button></div></div>@if (fieldErrors.estimatorQuantity) {<p class="field-error" id="estimator-quantity-error" aria-live="polite">{{ fieldErrors.estimatorQuantity }}</p>}<div class="care-note"><ion-icon name="water-outline" aria-hidden="true"></ion-icon><p>A little heads-up: this is an estimate. Final charges are confirmed by our team.</p></div></section>
+              <aside class="estimate-summary"><span class="eyebrow">LOOKING FRESH</span><h2>Your estimate</h2><span class="estimate-total" aria-live="polite">₱{{ estimatedTotal | number:'1.2-2' }}</span><dl><div><dt>Service</dt><dd>{{ selectedService?.name }}</dd></div><div><dt>Quantity</dt><dd>{{ quantity }} {{ selectedService?.unit }}</dd></div><div><dt>Rate</dt><dd>₱{{ selectedService?.price }} / {{ selectedService?.unit }}</dd></div></dl>@if (role === 'customer') {<button class="btn wide" type="button" (click)="placeCustomerOrder()">Review my order <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>} @else {<button class="btn wide" type="button" (click)="navigate('orders')">Create a customer order <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>}<button class="text-button reset-button" type="button" (click)="resetEstimator()">Start fresh · reset estimate</button></aside>
             </div>
-
-            <p>{{ order.service }} · {{ order.paymentMethod }}</p>
-            <button
-              class="payment-btn"
-              (click)="togglePayment(order)">
-              Mark as Paid
-            </button>
-          </article>
-        </section>
-
-        <section class="card">
-          <h3>Customer Records</h3>
-
-          <div *ngIf="customerRecords.length === 0" class="empty">
-            No customer orders recorded yet.
-          </div>
-
-          <article class="row" *ngFor="let customer of customerRecords">
-            <div>
-              <strong>{{ customer.name }}</strong>
-              <small>{{ customer.orders }} order(s)</small>
-            </div>
-            <strong>₱{{ customer.spending | number:'1.2-2' }}</strong>
-          </article>
-        </section>
-
-        <button class="btn" (click)="activePage = 'orders'">
-          Manage All Orders
-        </button>
-      </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer *ngIf="loggedIn">
-      <p>
-        © {{ currentYear }} Launderia Laundry Express.
-        All rights reserved.
-      </p>
-    </footer>
-
+          }
+          @if (activePage === 'orders' && role === 'admin') {
+            <section class="page-heading"><div><span class="eyebrow">KEEP THE FRESH FLOWING</span><h1>Every load,<br>looked after.</h1><p>Create, follow, and manage your customer orders.</p></div><span class="count large-count">{{ orders.length }} total orders</span></section>
+            <div class="orders-layout"><section class="panel new-order-panel">
+                <span class="eyebrow">A FRESH START</span><h2>New order</h2>
+                <form (ngSubmit)="addOrder()" novalidate>
+                  <div><label for="order-customer">Customer name</label><input id="order-customer" type="text" name="orderCustomer" [(ngModel)]="newOrder.customerName" (ngModelChange)="clearFieldError('orderCustomer')" [attr.aria-invalid]="fieldErrors.orderCustomer ? 'true' : null" [attr.aria-describedby]="fieldErrors.orderCustomer ? 'order-customer-error' : null" placeholder="Full name" required>@if (fieldErrors.orderCustomer) {<p class="field-error" id="order-customer-error" aria-live="polite">{{ fieldErrors.orderCustomer }}</p>}</div>
+                  <div><label for="order-service">Laundry service</label><select id="order-service" name="orderService" [(ngModel)]="newOrder.serviceId" (ngModelChange)="clearFieldError('orderService')" [attr.aria-invalid]="fieldErrors.orderService ? 'true' : null" [attr.aria-describedby]="fieldErrors.orderService ? 'order-service-error' : null">@for (service of services; track service.id) {<option [ngValue]="service.id">{{ service.name }}</option>}</select>@if (fieldErrors.orderService) {<p class="field-error" id="order-service-error" aria-live="polite">{{ fieldErrors.orderService }}</p>}</div>
+                  <div class="form-pair"><div><label for="order-quantity">Quantity</label><input id="order-quantity" type="number" name="orderQuantity" min="1" step="1" inputmode="numeric" [(ngModel)]="newOrder.quantity" (ngModelChange)="clearFieldError('orderQuantity')" [attr.aria-invalid]="fieldErrors.orderQuantity ? 'true' : null" [attr.aria-describedby]="fieldErrors.orderQuantity ? 'order-quantity-error' : null" required>@if (fieldErrors.orderQuantity) {<p class="field-error" id="order-quantity-error" aria-live="polite">{{ fieldErrors.orderQuantity }}</p>}</div><label>Pay with<select name="orderPaymentMethod" [(ngModel)]="newOrder.paymentMethod"><option>Cash</option><option>GCash</option><option>Maya</option></select></label></div>
+                  <div class="new-order-total"><span>Estimated total</span><strong>₱{{ newOrderTotal | number:'1.2-2' }}</strong></div>
+                  <button class="btn wide" type="submit">Create order <ion-icon name="add-outline" aria-hidden="true"></ion-icon></button>
+                </form>
+              </section>
+              <section class="orders-workspace"><div class="section-heading"><h2>Customer orders</h2><span class="count">{{ filteredOrders.length }} records</span></div><label class="search-field"><ion-icon name="search-outline" aria-hidden="true"></ion-icon><input type="search" [(ngModel)]="searchText" placeholder="Search name, service, status, or order ID" aria-label="Search orders"></label>@for (order of filteredOrders; track order.id) {<article class="panel managed-order"><div class="record-heading"><span class="avatar">{{ order.customerName.charAt(0) }}</span><div><h3>{{ order.customerName }}</h3><span class="subtle">#{{ order.id }} · {{ order.date | date:'MMM d, y' }}</span></div><strong class="order-price">₱{{ order.total | number:'1.2-2' }}</strong></div><p class="order-service">{{ order.service }} <span>· {{ order.quantity }} {{ order.unit }}</span></p><div class="order-controls"><label>Status<select [ngModel]="order.status" (ngModelChange)="updateStatus(order, $event)"><option>Received</option><option>Washing</option><option>Ready for Pickup</option><option>Completed</option></select></label><label>Payment method<select [ngModel]="order.paymentMethod" (ngModelChange)="updatePaymentMethod(order, $event)"><option>Cash</option><option>GCash</option><option>Maya</option></select></label></div><div class="order-actions"><button class="payment-button" [class.is-paid]="order.payment === 'Paid'" type="button" (click)="togglePayment(order)"><ion-icon name="checkmark-outline" aria-hidden="true"></ion-icon>{{ order.payment === 'Paid' ? 'Paid · mark unpaid' : 'Unpaid · mark paid' }}</button><button class="delete-button" type="button" [attr.aria-label]="'Delete order for ' + order.customerName" (click)="deleteOrder(order.id)">Delete order</button></div></article>} @empty {<div class="panel empty-state"><span class="empty-symbol"><ion-icon name="receipt-outline" aria-hidden="true"></ion-icon></span><h3>{{ searchText ? 'No match just yet.' : 'Room for something fresh.' }}</h3><p>{{ searchText ? 'Try another name, service, status, or order number.' : 'Create your first order to get things moving.' }}</p></div>}</section></div>
+          }
+        </main>
+        <footer class="workspace-footer"><span>© {{ currentYear }} Launderia Laundry Express</span><span>A little care. Every day.</span></footer>
+      </div>
+    }
+    <app-feedback-modal [feedback]="feedback" (confirmed)="confirmFeedback()" (closed)="dismissFeedback()" (dismissed)="onFeedbackDismissed()"></app-feedback-modal>
   </div>
 </ion-content>

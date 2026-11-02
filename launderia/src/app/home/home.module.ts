@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular/lazy';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
+import { FeedbackModalComponent } from './feedback-modal.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { HomePage } from './home.page';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, FeedbackModalComponent]
 })
 export class HomePageModule {}

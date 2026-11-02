@@ -1,2 +1,21 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+  color-scheme: light;
+  --laundry-green: #c8d69b;
+  --laundry-vanilla: #f6e6a5;
+  --laundry-blue: #3971b8;
+  --laundry-ivory: #fbfcee;
+  --laundry-ink: #343b1b;
+  --laundry-muted: #66704f;
+  --laundry-error: #a23e32;
+  --laundry-line: #dde1cc;
+  --laundry-font: 'Poppins', system-ui, sans-serif;
+  --laundry-soft-font: 'Comfortaa', 'Poppins', sans-serif;
+  --ion-font-family: var(--laundry-font);
+  --ion-background-color: var(--laundry-ivory);
+  --ion-text-color: var(--laundry-ink);
+  --ion-color-primary: var(--laundry-blue);
+  --ion-color-primary-rgb: 57, 113, 184;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-shade: #3263a2;
+  --ion-color-primary-tint: #4d7fc0;
+}
