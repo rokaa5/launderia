@@ -1,0 +1,720 @@
+
+<ion-content [fullscreen]="true">
+  <div class="app-shell">
+
+    <!-- HEADER -->
+    <header class="site-header" *ngIf="loggedIn">
+      <a class="logo" (click)="goHome()">
+        LAUNDERIA
+        <small>Laundry Express</small>
+      </a>
+
+      <nav>
+        <button
+          *ngFor="let item of navigation"
+          [attr.aria-current]="activePage === item.page ? 'page' : null"
+          (click)="activePage = item.page">
+          {{ item.label }}
+        </button>
+      </nav>
+
+      <button class="btn alt logout-btn" (click)="logout()">
+        Logout
+      </button>
+    </header>
+
+    <!-- ACCOUNT SELECTION -->
+    <main *ngIf="!loggedIn && authView === 'welcome'">
+      <section class="auth-hero">
+        <p class="eyebrow">LAUNDRY MADE EASY</p>
+        <h1>Fresh clothes.<br>Fresh confidence.</h1>
+        <p class="auth-description">
+          Welcome to Launderia Laundry Express. Choose how you want
+          to access the system.
+        </p>
+
+        <div class="auth-choice-grid">
+          <article class="card auth-choice">
+            <div class="feature-icon">C</div>
+            <h2>Customer</h2>
+            <p>
+              Create an account, place laundry orders, and monitor
+              your order status.
+            </p>
+            <button class="btn" (click)="chooseRole('customer')">
+              Continue as Customer
+            </button>
+          </article>
+
+          <article class="card auth-choice">
+            <div class="feature-icon">A</div>
+            <h2>Administrator</h2>
+            <p>
+              Manage laundry orders, customers, payments, and
+              business sales records.
+            </p>
+            <button class="btn alt" (click)="chooseRole('admin')">
+              Continue as Admin
+            </button>
+          </article>
+        </div>
+
+        <p class="note">
+          New customer? Select Customer to create your free account.
+        </p>
+      </section>
+    </main>
+
+    <!-- LOGIN -->
+    <main *ngIf="!loggedIn && authView === 'login'">
+      <section class="auth-panel card">
+        <p class="eyebrow">
+          {{ selectedRole === 'admin' ? 'ADMINISTRATOR ACCESS' : 'CUSTOMER ACCESS' }}
+        </p>
+
+        <h2>
+          {{ selectedRole === 'admin' ? 'Admin Login' : 'Customer Login' }}
+        </h2>
+
+        <p class="muted">
+          Enter your username and password to continue.
+        </p>
+
+        <form class="auth-form" (ngSubmit)="login()">
+          <label>
+            Username
+            <input
+              type="text"
+              name="loginUsername"
+              [(ngModel)]="username"
+              placeholder="Enter your username"
+              autocomplete="username"
+              required>
+          </label>
+
+          <label>
+            Password
+            <input
+              type="password"
+              name="loginPassword"
+              [(ngModel)]="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required>
+          </label>
+
+          <button class="btn full-btn" type="submit">
+            Login
+          </button>
+        </form>
+
+        <div class="auth-links" *ngIf="selectedRole === 'customer'">
+          <p>Don't have an account yet?</p>
+          <button class="text-btn" (click)="showSignup()">
+            Sign Up for Free
+          </button>
+        </div>
+
+        <button class="text-btn" (click)="backToWelcome()">
+          ← Back to account selection
+        </button>
+      </section>
+    </main>
+
+    <!-- SIGN UP -->
+    <main *ngIf="!loggedIn && authView === 'signup'">
+      <section class="auth-panel card">
+        <p class="eyebrow">JOIN LAUNDERIA</p>
+        <h2>Create Your Free Account</h2>
+        <p class="muted">
+          Register as a customer to place and track your laundry orders.
+        </p>
+
+        <form class="auth-form" (ngSubmit)="signup()">
+          <label>
+            Full Name
+            <input
+              type="text"
+              name="signupName"
+              [(ngModel)]="signupName"
+              placeholder="Enter your full name"
+              required>
+          </label>
+
+          <label>
+            Username
+            <input
+              type="text"
+              name="signupUsername"
+              [(ngModel)]="signupUsername"
+              placeholder="Create a username"
+              required>
+          </label>
+
+          <label>
+            Password
+            <input
+              type="password"
+              name="signupPassword"
+              [(ngModel)]="signupPassword"
+              placeholder="At least 6 characters"
+              required>
+          </label>
+
+          <label>
+            Confirm Password
+            <input
+              type="password"
+              name="confirmPassword"
+              [(ngModel)]="confirmPassword"
+              placeholder="Re-enter your password"
+              required>
+          </label>
+
+          <button class="btn full-btn" type="submit">
+            Create Free Account
+          </button>
+        </form>
+
+        <button class="text-btn" (click)="backToLogin()">
+          ← Back to Customer Login
+        </button>
+      </section>
+    </main>
+
+    <!-- APPLICATION -->
+    <main *ngIf="loggedIn">
+
+      <!-- HOME -->
+      <section *ngIf="activePage === 'home'">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">WELCOME TO LAUNDERIA</p>
+            <h1>Fresh clothes, more time for you.</h1>
+            <p>
+              Reliable and convenient laundry services designed to
+              make your everyday life easier.
+            </p>
+
+            <div class="btns">
+              <button
+                class="btn"
+                (click)="activePage = role === 'admin' ? 'orders' : 'estimator'">
+                {{ role === 'admin' ? 'Manage Orders' : 'Place an Order' }}
+              </button>
+              <button class="btn alt" (click)="activePage = 'services'">
+                View Services
+              </button>
+            </div>
+          </div>
+
+          <aside class="tag">
+            <h3>Our Services</h3>
+            <ul>
+              <li><span>Wash and Dry</span><b>₱35/kg</b></li>
+              <li><span>Wash, Dry and Fold</span><b>₱45/kg</b></li>
+              <li><span>Dry Cleaning</span><b>₱100/load</b></li>
+              <li><span>Ironing</span><b>₱25/piece</b></li>
+            </ul>
+            <p class="tag-note">
+              Quality laundry care you can trust.
+            </p>
+          </aside>
+        </section>
+
+        <section class="feature-section">
+          <p class="eyebrow">WHY CHOOSE US</p>
+          <h2>Laundry made convenient</h2>
+
+          <div class="grid">
+            <article class="card">
+              <span class="feature-icon">01</span>
+              <h3>Easy Ordering</h3>
+              <p>
+                Place your laundry order conveniently through the system.
+              </p>
+            </article>
+
+            <article class="card">
+              <span class="feature-icon">02</span>
+              <h3>Order Tracking</h3>
+              <p>
+                Monitor your laundry status from received to completed.
+              </p>
+            </article>
+
+            <article class="card">
+              <span class="feature-icon">03</span>
+              <h3>Affordable Services</h3>
+              <p>
+                Check service prices and estimate your laundry expenses.
+              </p>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <!-- SERVICES -->
+      <section *ngIf="activePage === 'services'">
+        <p class="eyebrow">WHAT WE OFFER</p>
+        <h1>Our Laundry Services</h1>
+        <p>Choose the service that fits your laundry needs.</p>
+
+        <div class="grid">
+          <article
+            class="card service-card"
+            *ngFor="let service of services">
+
+            <span class="feature-icon">{{ service.id }}</span>
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.description }}</p>
+
+            <h2 class="service-price">
+              ₱{{ service.price }}
+              <small>/ {{ service.unit }}</small>
+            </h2>
+
+            <button class="btn" (click)="selectService(service)">
+              Select Service
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <!-- PRICE ESTIMATOR -->
+      <section *ngIf="activePage === 'estimator'">
+        <p class="eyebrow">PLAN YOUR LAUNDRY</p>
+        <h1>Price Estimator</h1>
+        <p>Calculate the estimated cost of your laundry service.</p>
+
+        <div class="calc">
+          <section class="card">
+            <h3>Select a Service</h3>
+
+            <label class="field-label">
+              Laundry Service
+              <select [(ngModel)]="selectedServiceId">
+                <option
+                  *ngFor="let service of services"
+                  [ngValue]="service.id">
+                  {{ service.name }} — ₱{{ service.price }}/{{ service.unit }}
+                </option>
+              </select>
+            </label>
+
+            <div class="row">
+              <div>
+                <strong>Quantity</strong>
+                <small>{{ selectedService?.unit || 'unit' }}</small>
+              </div>
+
+              <div class="step">
+                <button type="button" (click)="changeQuantity(-1)">−</button>
+                <output>{{ quantity }}</output>
+                <button type="button" (click)="changeQuantity(1)">+</button>
+              </div>
+            </div>
+
+            <p class="note">
+              This is an estimated price. Final charges may be confirmed
+              by the laundry administrator.
+            </p>
+          </section>
+
+          <aside class="card total">
+            <p class="eyebrow">ESTIMATED TOTAL</p>
+            <div class="big">
+              ₱{{ estimatedTotal | number:'1.2-2' }}
+            </div>
+
+            <dl>
+              <dt>Service</dt>
+              <dd>{{ selectedService?.name }}</dd>
+
+              <dt>Quantity</dt>
+              <dd>{{ quantity }} {{ selectedService?.unit }}</dd>
+
+              <dt>Rate</dt>
+              <dd>₱{{ selectedService?.price }}</dd>
+            </dl>
+
+            <button
+              *ngIf="role === 'customer'"
+              class="btn full-btn"
+              (click)="placeCustomerOrder()">
+              Confirm Order
+            </button>
+
+            <p *ngIf="role === 'admin'" class="note">
+              Customer orders can be created in the Order Management page.
+            </p>
+
+            <button class="text-btn" (click)="resetEstimator()">
+              Reset Calculator
+            </button>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ADMIN ORDER MANAGEMENT -->
+      <section *ngIf="activePage === 'orders' && role === 'admin'">
+        <p class="eyebrow">ADMINISTRATION</p>
+        <h1>Order Management</h1>
+        <p>Create, search, update, and manage customer orders.</p>
+
+        <div class="order-layout">
+          <section class="card order-form">
+            <h3>Create New Order</h3>
+
+            <form (ngSubmit)="addOrder()">
+              <label>
+                Customer Name
+                <input
+                  type="text"
+                  name="orderCustomer"
+                  [(ngModel)]="newOrder.customerName"
+                  placeholder="Enter customer name"
+                  required>
+              </label>
+
+              <label>
+                Laundry Service
+                <select
+                  name="orderService"
+                  [(ngModel)]="newOrder.serviceId">
+                  <option
+                    *ngFor="let service of services"
+                    [ngValue]="service.id">
+                    {{ service.name }}
+                  </option>
+                </select>
+              </label>
+
+              <label>
+                Quantity
+                <input
+                  type="number"
+                  name="orderQuantity"
+                  min="1"
+                  step="1"
+                  [(ngModel)]="newOrder.quantity"
+                  required>
+              </label>
+
+              <label>
+                Payment Method
+                <select
+                  name="orderPaymentMethod"
+                  [(ngModel)]="newOrder.paymentMethod">
+                  <option value="Cash">Cash</option>
+                  <option value="GCash">GCash</option>
+                  <option value="Maya">Maya</option>
+                </select>
+              </label>
+
+              <p class="notice">
+                Estimated total:
+                ₱{{ newOrderTotal | number:'1.2-2' }}
+              </p>
+
+              <button class="btn full-btn" type="submit">
+                Add Order
+              </button>
+            </form>
+          </section>
+
+          <section class="card">
+            <div class="list-heading">
+              <h3>Customer Orders</h3>
+              <span>{{ filteredOrders.length }} records</span>
+            </div>
+
+            <input
+              class="search"
+              type="search"
+              [(ngModel)]="searchText"
+              placeholder="Search customer, service, or order ID">
+
+            <div *ngIf="filteredOrders.length === 0" class="empty">
+              No orders found.
+            </div>
+
+            <article
+              class="order-record"
+              *ngFor="let order of filteredOrders">
+
+              <div class="record-top">
+                <div>
+                  <strong>{{ order.customerName }}</strong>
+                  <small>Order #{{ order.id }}</small>
+                </div>
+                <b>₱{{ order.total | number:'1.2-2' }}</b>
+              </div>
+
+              <p>
+                {{ order.service }} ·
+                {{ order.quantity }} {{ order.unit }}
+              </p>
+              <p>Order date: {{ order.date }}</p>
+
+              <div class="record-controls">
+                <label>
+                  Order Status
+                  <select
+                    [ngModel]="order.status"
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="updateStatus(order, $event)">
+                    <option value="Received">Received</option>
+                    <option value="Washing">Washing</option>
+                    <option value="Ready for Pickup">Ready for Pickup</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </label>
+
+                <label>
+                  Payment Method
+                  <select
+                    [ngModel]="order.paymentMethod"
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="updatePaymentMethod(order, $event)">
+                    <option value="Cash">Cash</option>
+                    <option value="GCash">GCash</option>
+                    <option value="Maya">Maya</option>
+                  </select>
+                </label>
+
+                <button
+                  class="payment-btn"
+                  [class.paid]="order.payment === 'Paid'"
+                  (click)="togglePayment(order)">
+                  {{ order.payment === 'Paid' ? 'Paid' : 'Mark Paid' }}
+                </button>
+
+                <button
+                  class="delete-btn"
+                  (click)="deleteOrder(order.id)">
+                  Delete
+                </button>
+              </div>
+
+              <p>
+                Payment status:
+                <strong>{{ order.payment }}</strong>
+              </p>
+            </article>
+          </section>
+        </div>
+      </section>
+
+      <!-- CUSTOMER DASHBOARD -->
+      <section *ngIf="activePage === 'customer' && role === 'customer'">
+        <p class="eyebrow">CUSTOMER PORTAL</p>
+        <h1>My Dashboard</h1>
+        <p>Welcome back, {{ currentCustomer }}.</p>
+
+        <div class="stats">
+          <article class="card stat">
+            <span>Total Orders</span>
+            <strong>{{ customerOrders.length }}</strong>
+          </article>
+
+          <article class="card stat">
+            <span>Completed</span>
+            <strong>{{ customerCompletedOrders }}</strong>
+          </article>
+
+          <article class="card stat">
+            <span>In Progress</span>
+            <strong>{{ customerActiveOrders }}</strong>
+          </article>
+
+          <article class="card stat">
+            <span>Loyalty Points</span>
+            <strong>{{ loyaltyPoints }}</strong>
+          </article>
+        </div>
+
+        <section class="card">
+          <div class="list-heading">
+            <h3>Order Tracking</h3>
+            <span>{{ customerOrders.length }} orders</span>
+          </div>
+
+          <div *ngIf="customerOrders.length === 0" class="empty">
+            You have no orders yet.
+            <button
+              class="text-btn"
+              (click)="activePage = 'estimator'">
+              Place your first order
+            </button>
+          </div>
+
+          <article
+            class="order-record"
+            *ngFor="let order of customerOrders">
+
+            <div class="record-top">
+              <div>
+                <strong>{{ order.service }}</strong>
+                <small>Order #{{ order.id }}</small>
+              </div>
+              <b>₱{{ order.total | number:'1.2-2' }}</b>
+            </div>
+
+            <p>
+              {{ order.quantity }} {{ order.unit }} · {{ order.date }}
+            </p>
+            <p>Order status: <strong>{{ order.status }}</strong></p>
+            <p>Payment: <strong>{{ order.payment }}</strong></p>
+            <p>Payment method: {{ order.paymentMethod }}</p>
+          </article>
+        </section>
+
+        <section class="card">
+          <h3>Transaction History</h3>
+
+          <div *ngIf="customerOrders.length === 0" class="empty">
+            No transactions available.
+          </div>
+
+          <div class="row" *ngFor="let order of customerOrders">
+            <div>
+              <strong>Order #{{ order.id }}</strong>
+              <small>{{ order.date }} · {{ order.service }}</small>
+            </div>
+            <strong>₱{{ order.total | number:'1.2-2' }}</strong>
+          </div>
+        </section>
+
+        <button class="btn" (click)="activePage = 'estimator'">
+          Place Another Order
+        </button>
+      </section>
+
+      <!-- ADMIN DASHBOARD -->
+      <section *ngIf="activePage === 'admin' && role === 'admin'">
+        <p class="eyebrow">ADMINISTRATION</p>
+        <h1>Admin Dashboard</h1>
+        <p>Monitor your laundry business performance and records.</p>
+
+        <div class="stats">
+          <article class="card stat">
+            <span>Total Orders</span>
+            <strong>{{ orders.length }}</strong>
+          </article>
+
+          <article class="card stat">
+            <span>Completed Orders</span>
+            <strong>{{ completedOrders }}</strong>
+          </article>
+
+          <article class="card stat">
+            <span>Pending Orders</span>
+            <strong>{{ pendingOrders }}</strong>
+          </article>
+
+          <article class="card stat">
+            <span>Unpaid Orders</span>
+            <strong>{{ unpaidOrders }}</strong>
+          </article>
+        </div>
+
+        <div class="grid">
+          <article class="card stat">
+            <span>Total Collected Revenue</span>
+            <strong>₱{{ totalRevenue | number:'1.2-2' }}</strong>
+          </article>
+
+          <article class="card stat">
+            <span>Unpaid Amount</span>
+            <strong>₱{{ unpaidRevenue | number:'1.2-2' }}</strong>
+          </article>
+
+          <article class="card stat">
+            <span>Registered Customers</span>
+            <strong>{{ registeredCustomers.length }}</strong>
+          </article>
+        </div>
+
+        <section class="card">
+          <h3>Monthly Sales</h3>
+          <p class="note">
+            Revenue from orders marked as paid.
+          </p>
+
+          <div class="sales-chart">
+            <div
+              class="sales-column"
+              *ngFor="let sale of monthlySales">
+              <span class="sales-value">
+                ₱{{ sale.total | number:'1.0-0' }}
+              </span>
+              <div
+                class="sales-bar"
+                [style.height.%]="sale.height">
+              </div>
+              <small>{{ sale.month }}</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Pending Payments</h3>
+
+          <div *ngIf="unpaidOrderList.length === 0" class="empty">
+            No pending payments.
+          </div>
+
+          <article
+            class="order-record"
+            *ngFor="let order of unpaidOrderList">
+            <div class="record-top">
+              <div>
+                <strong>{{ order.customerName }}</strong>
+                <small>Order #{{ order.id }}</small>
+              </div>
+              <b>₱{{ order.total | number:'1.2-2' }}</b>
+            </div>
+
+            <p>{{ order.service }} · {{ order.paymentMethod }}</p>
+            <button
+              class="payment-btn"
+              (click)="togglePayment(order)">
+              Mark as Paid
+            </button>
+          </article>
+        </section>
+
+        <section class="card">
+          <h3>Customer Records</h3>
+
+          <div *ngIf="customerRecords.length === 0" class="empty">
+            No customer orders recorded yet.
+          </div>
+
+          <article class="row" *ngFor="let customer of customerRecords">
+            <div>
+              <strong>{{ customer.name }}</strong>
+              <small>{{ customer.orders }} order(s)</small>
+            </div>
+            <strong>₱{{ customer.spending | number:'1.2-2' }}</strong>
+          </article>
+        </section>
+
+        <button class="btn" (click)="activePage = 'orders'">
+          Manage All Orders
+        </button>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer *ngIf="loggedIn">
+      <p>
+        © {{ currentYear }} Launderia Laundry Express.
+        All rights reserved.
+      </p>
+    </footer>
+
+  </div>
+</ion-content>
