@@ -48,7 +48,7 @@ export function buildCurveGeometry(series:SeriesPoint[],prefix='',suffix='',fixe
     };
   }
   const pts=series.map((s,i)=>({
-    x:Number(((i/(series.length-1))*100).toFixed(2)),
+    x:Number((4+(i/(series.length-1))*92).toFixed(2)),
     y:mapY(s.value),
     label:s.label,
     title:s.title||''
@@ -93,13 +93,17 @@ function clampCoord(y:number):number {
 
 function buildStepPaths(pts:{x:number;y:number}[]):{stepLinePath:string;stepAreaPath:string} {
   const n=pts.length;
-  const width=100/n;
+  if(!n)return {stepLinePath:'',stepAreaPath:''};
+  const xStart=pts[0].x;
+  const xEnd=pts[n-1].x;
+  const span=xEnd-xStart;
+  const width=span/n;
   let line='';
   for(let i=0;i<n;i++){
-    const x0=Number((i*width).toFixed(2));
-    const x1=Number(((i+1)*width).toFixed(2));
+    const x0=Number((xStart+i*width).toFixed(2));
+    const x1=Number((xStart+(i+1)*width).toFixed(2));
     const y=pts[i].y;
     line+=i===0?`M ${x0} ${y} H ${x1}`:` V ${y} H ${x1}`;
   }
-  return {stepLinePath:line,stepAreaPath:`${line} V 100 H 0 Z`};
+  return {stepLinePath:line,stepAreaPath:`${line} V 100 H ${xStart} Z`};
 }

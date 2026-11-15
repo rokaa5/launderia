@@ -148,3 +148,28 @@ assert.ok(all.buckets.length>=12);
 assert.equal(all.orderValue,565);
 assert.ok(curOrder.id&&todayOrder.id);
 });
+
+test('order search tokenizes whitespace and matches id, customer, email, and service',()=>{
+const s=new LaundryStore();
+const o1=s.book({name:'Maria Santos',email:'maria@example.com',role:'customer' as const},{serviceId:s.services[0].id,quantity:2,date:today,notes:''},today);
+const o2=s.book({name:'John Doe',email:'johndoe@test.org',role:'customer' as const},{serviceId:s.services[1].id,quantity:1,date:today,notes:''},today);
+
+const filterFn=(orders:typeof s.orders,q:string,status='All orders')=>{
+  const tokens=q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  return orders.filter(o=>{
+    if(status!=='All orders'&&o.status!==status)return false;
+    if(!tokens.length)return true;
+    const haystack=`${o.id} ${o.name} ${o.email} ${o.service}`.toLowerCase();
+    return tokens.every(t=>haystack.includes(t));
+  });
+};
+
+assert.equal(filterFn(s.orders,'maria').length,1);
+assert.equal(filterFn(s.orders,'maria@example.com').length,1);
+assert.equal(filterFn(s.orders,'Santos wash').length,1);
+assert.equal(filterFn(s.orders,'test.org dry').length,1);
+assert.equal(filterFn(s.orders,'nonexistent').length,0);
+assert.equal(filterFn(s.orders,o1.id).length,1);
+assert.equal(filterFn(s.orders,o2.id).length,1);
+});
+

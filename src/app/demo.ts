@@ -7,7 +7,7 @@ return null;
 }
 export function validateSignup(name:string,email:string,password:string,confirm:string):string {
 if(name.trim().length<2)return 'Please enter your full name.';
-if(!/^[^\s@]+@gmail\.com$/i.test(email.trim()))return 'Please enter a valid @gmail.com address.';
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(email.trim()))return 'Please enter a valid email address.';
 if(password.length<8)return 'Use at least 8 characters for your password.';
 if(password!==confirm)return 'Your passwords do not match.';
 return '';

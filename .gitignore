@@ -2,3 +2,8 @@ node_modules/
 dist/
 .angular/
 out-tsc/
+
+# Binaries, logs & temporary tunnel files
+cloudflared.exe
+*.log
+current-tunnel-url.txt

@@ -1,7 +1,7 @@
 <ion-app (pointerdown)="pressButton($event)" (pointerup)="releaseButton()" (pointercancel)="releaseButton()" [class.signed-in]="!!user">
 <svg class="svg-defs" aria-hidden="true"><defs>
 <symbol id="shirt" viewBox="0 0 240 240"><path d="M79 44 39 65 14 108l39 24 19-26-7 99q55 13 110 0l-7-99 19 26 39-24-25-43-40-21q-40 29-82 0Z" fill="currentColor"/><path d="M91 48q29 48 58 0" fill="none" stroke="#252522" stroke-width="3"/><path d="m76 80-4 26m92-26 4 26" stroke="#252522" stroke-width="3"/><ellipse cx="109" cy="122" rx="4" ry="6" fill="#252522"/><ellipse cx="129" cy="122" rx="4" ry="6" fill="#252522"/></symbol>
-<symbol id="socks" viewBox="0 0 240 240"><path d="m58 39 58 5-9 91q47 20 35 51-8 21-38 18L42 181q-18-9-12-31l19-47Z" fill="currentColor"/><path d="m134 31 58 7-10 97q41 17 30 45-9 23-36 18l-48-15q24-30 1-48Z" fill="currentColor" opacity=".65"/><path d="m53 67 61 6m17-14 58 8" stroke="#252522" stroke-width="3"/><ellipse cx="71" cy="143" rx="3" ry="5"/><ellipse cx="88" cy="148" rx="3" ry="5"/></symbol>
+<symbol id="socks" viewBox="0 0 240 240"><path d="m58 39 58 5-9 91q47 20 35 51-8 21-38 18L42 181q-18-9-12-31l19-47Z" fill="currentColor"/><path d="m134 31 58 7-10 97q41 17 30 45-9 23-36 18l-48-15q24-30 1-48Z" fill="currentColor" opacity=".65"/><path d="m53 67 61 6m17-14 58 8" stroke="#252522" stroke-width="3"/><ellipse cx="71" cy="143" rx="3" ry="5" fill="#252522"/><ellipse cx="88" cy="148" rx="3" ry="5" fill="#252522"/></symbol>
 <symbol id="blanket" viewBox="0 0 240 240"><rect x="32" y="40" width="177" height="165" rx="27" fill="currentColor"/><path d="M60 41v163m34-163v163m35-163v163m35-163v163M32 77h177M32 116h177M32 155h177" stroke="#fff" opacity=".5" stroke-width="3"/><ellipse cx="111" cy="115" rx="4" ry="6"/><ellipse cx="131" cy="115" rx="4" ry="6"/></symbol>
 <symbol id="welcome-up" viewBox="0 0 24 24"><path d="M6 18 18 6M8 6h10v10"/></symbol>
 <symbol id="welcome-down" viewBox="0 0 24 24"><path d="M12 4v15m-6-6 6 6 6-6"/></symbol>
@@ -10,11 +10,14 @@
 <symbol id="welcome-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
 <symbol id="welcome-brand" viewBox="0 0 24 24"><path d="M4 14 19 6M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></symbol>
 <symbol id="welcome-cycle" viewBox="0 0 24 24"><path d="M20 8a8 8 0 1 0 0 8m0-12v4h-4"/></symbol>
-<symbol id="welcome-heart" viewBox="0 0 24 24"><path d="M12 20 4 12a5 5 0 0 1 8-6 5 5 0 0 1 8 6Z"/></symbol><symbol id="ui-overview" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></symbol><symbol id="ui-orders" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></symbol><symbol id="ui-services" viewBox="0 0 24 24"><path d="m12 4 8 4.5-8 4.5-8-4.5Z"/><path d="m4 12.5 8 4.5 8-4.5"/><path d="m4 16.5 8 4.5 8-4.5"/></symbol><symbol id="ui-logout" viewBox="0 0 24 24"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol><symbol id="ui-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol><symbol id="ui-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="ui-calendar" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="14" rx="2"/><path d="M8 4v4m8-4v4M4 11h16"/></symbol><symbol id="ui-view-stack" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="5" rx="1.5" fill="currentColor" stroke="none"/><rect x="4" y="14" width="16" height="5" rx="1.5" fill="currentColor" stroke="none"/></symbol><symbol id="ui-view-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/><rect x="13" y="4" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/><rect x="4" y="13" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/><rect x="13" y="13" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/></symbol>
+<symbol id="welcome-heart" viewBox="0 0 24 24"><path d="M12 20 4 12a5 5 0 0 1 8-6 5 5 0 0 1 8 6Z"/></symbol><symbol id="ui-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="ui-overview" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></symbol><symbol id="ui-orders" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></symbol><symbol id="ui-services" viewBox="0 0 24 24"><path d="m12 4 8 4.5-8 4.5-8-4.5Z"/><path d="m4 12.5 8 4.5 8-4.5"/><path d="m4 16.5 8 4.5 8-4.5"/></symbol><symbol id="ui-logout" viewBox="0 0 24 24"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol><symbol id="ui-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol><symbol id="ui-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="ui-calendar" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="14" rx="2"/><path d="M8 4v4m8-4v4M4 11h16"/></symbol><symbol id="ui-view-stack" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="5" rx="1.5" fill="currentColor" stroke="none"/><rect x="4" y="14" width="16" height="5" rx="1.5" fill="currentColor" stroke="none"/></symbol><symbol id="ui-view-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/><rect x="13" y="4" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/><rect x="4" y="13" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/><rect x="13" y="13" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/></symbol>
 </defs></svg>
 <ng-template #washerArt let-graphicClass>
 <svg [attr.class]="graphicClass" aria-hidden="true" viewBox="0 0 400 320" fill="none">
-    <defs><clipPath [attr.id]="graphicClass + '-window'"><circle cx="200" cy="176" r="50"/></clipPath></defs>
+    <defs>
+      <clipPath [attr.id]="graphicClass + '-window'"><circle cx="200" cy="176" r="50"/></clipPath>
+      <clipPath [attr.id]="graphicClass + '-drum-upper'"><rect x="140" y="115" width="120" height="61"/></clipPath>
+    </defs>
     <ellipse cx="200" cy="266" rx="95" ry="13" fill="#23313d" opacity=".13"/>
     <g class="hero-bubbles" stroke="#425361" stroke-width="2">
       <circle cx="88" cy="152" r="10"/><circle cx="68" cy="112" r="5"/><circle cx="104" cy="86" r="4"/><circle cx="82" cy="204" r="6.5"/><circle class="bubble-soft" cx="106" cy="178" r="7"/><circle cx="308" cy="120" r="6"/><circle cx="328" cy="184" r="12"/><circle cx="338" cy="96" r="8"/><circle cx="295" cy="70" r="4.5"/><circle class="bubble-soft" cx="304" cy="222" r="6"/>
@@ -25,7 +28,7 @@
     <path d="M231 85h23" stroke="#23313d" stroke-width="5" stroke-linecap="round"/>
     <circle cx="200" cy="176" r="54" fill="#add8e6" stroke="#23313d" stroke-width="5"/>
     <g [attr.clip-path]="'url(#' + graphicClass + '-window)'">
-      <circle class="hero-drum" cx="200" cy="176" r="43" stroke="#425361" stroke-width="3" stroke-dasharray="3 10"/>
+      <circle class="hero-drum" [attr.clip-path]="'url(#' + graphicClass + '-drum-upper)'" cx="200" cy="176" r="43" stroke="#425361" stroke-width="3" stroke-dasharray="3 10"/>
       <path class="hero-water-back" d="M120 176q28-18 56 0t56-2 56 2v65H120Z" fill="#a8dbed" opacity=".78"/><path class="hero-water" d="M120 184q25-20 50-1t50-1 56 2v60H120Z" fill="#7fc1d6"/>
       <g class="hero-foam" fill="#fffdfa"><circle cx="215" cy="159" r="8"/><circle cx="186" cy="151" r="5"/><circle cx="170" cy="166" r="3.5" opacity=".85"/><circle cx="229" cy="170" r="4" opacity=".9"/><circle cx="199" cy="142" r="3" opacity=".8"/></g>
 
@@ -126,21 +129,21 @@
 @if(page==='login'||page==='signup'){
 <section appScene="auth" class="auth-layout"><div class="auth-story"><svg class="auth-story-waves" viewBox="0 0 600 780" preserveAspectRatio="none" aria-hidden="true"><path class="auth-wave-back" d="M0 448C145 392 310 518 475 454C530 432 568 416 600 424V780H0Z"/><path class="auth-wave-front" d="M0 538C155 594 315 476 475 538C532 560 568 574 600 560V780H0Z"/><circle cx="516" cy="116" r="64" class="auth-orb"/><circle cx="96" cy="648" r="46" class="auth-orb"/></svg><h1>{{page==='login'?'A fresh hello.':'Fresh starts here.'}}</h1><p>Your laundry, a little lighter.<br>Your day, a little lovelier.</p><ng-container *ngTemplateOutlet="washerArt; context: { $implicit: 'auth-washer' }"></ng-container></div><div class="auth-form-wrap">
 @for (authPage of ['login', 'signup']; track authPage) {
-<div class="auth-form-content" [attr.data-auth-page]="authPage" [class.auth-inactive]="page !== authPage" [attr.inert]="page !== authPage ? '' : null"><a href="#home" class="back-link"><svg class="welcome-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#welcome-left"/></svg> Back to the good stuff</a><h2>{{authPage==='login'?'Welcome back.':'Join the fresh side.'}}</h2><p>{{authPage==='login'?'Your next fresh start is right here.':'A few details, and you’re part of the fold.'}}</p><form (ngSubmit)="authPage==='login'?login():signup()" autocomplete="off" novalidate>@if(authPage==='signup'){<label [attr.for]="authPage + '-name'">Full name</label><input [id]="authPage + '-name'" name="name" [(ngModel)]="name" autocomplete="off" placeholder="Your full name" required>}<label [attr.for]="authPage + '-email'">{{authPage==='signup'?'Gmail address':'Username or email'}}</label><input [id]="authPage + '-email'" type="text" [attr.inputmode]="authPage==='signup'?'email':'text'" name="email" [(ngModel)]="email" autocomplete="off" autocapitalize="none" spellcheck="false" [attr.placeholder]="authPage==='signup'?'you@gmail.com':'Username or email'" required><label [attr.for]="authPage + '-password'">Password</label><div class="password-wrap"><input [id]="authPage + '-password'" [type]="showPassword?'text':'password'" name="password" [(ngModel)]="password" [attr.autocomplete]="authPage==='login'?'current-password':'new-password'" placeholder="At least 8 characters" required><button type="button" [attr.aria-label]="showPassword ? 'Hide passwords' : 'Show passwords'" [attr.aria-controls]="authPage === 'signup' ? 'signup-password signup-confirm' : 'login-password'" (click)="showPassword=!showPassword"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/><path class="password-slash" [class.drawn]="!showPassword" pathLength="1" d="M3 3l18 18"/></svg></button></div>@if(authPage==='signup'){<label [attr.for]="authPage + '-confirm'">Confirm password</label><input [id]="authPage + '-confirm'" [type]="showPassword?'text':'password'" name="confirm" [(ngModel)]="confirm" autocomplete="new-password" placeholder="One more time" required>}@if(page === authPage && error){<p class="form-error" role="alert">{{error}}</p>}<ion-button type="submit" class="primary full">{{authPage==='login'?'Log in':'Create account'}}</ion-button></form><p class="switch-auth">{{authPage==='login'?'New around here?':'Already part of the fold?'}} <a [href]="authPage==='login'?'#signup':'#login'">{{authPage==='login'?'Create an account':'Log in'}}</a></p></div>
+<div class="auth-form-content" [attr.data-auth-page]="authPage" [class.auth-inactive]="page !== authPage" [attr.inert]="page !== authPage ? '' : null"><a href="#home" class="back-link"><svg class="welcome-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#welcome-left"/></svg> Back to the good stuff</a><h2>{{authPage==='login'?'Welcome back.':'Join the fresh side.'}}</h2><p>{{authPage==='login'?'Your next fresh start is right here.':'A few details, and you’re part of the fold.'}}</p><form (ngSubmit)="authPage==='login'?login():signup()" autocomplete="off" novalidate>@if(authPage==='signup'){<label [attr.for]="authPage + '-name'">Full name</label><input [id]="authPage + '-name'" name="name" [(ngModel)]="name" autocomplete="off" placeholder="Your full name" required>}<label [attr.for]="authPage + '-email'">{{authPage==='signup'?'Email address':'Username or email'}}</label><input [id]="authPage + '-email'" type="text" [attr.inputmode]="authPage==='signup'?'email':'text'" name="email" [(ngModel)]="email" autocomplete="off" autocapitalize="none" spellcheck="false" [attr.placeholder]="authPage==='signup'?'you@example.com':'Username or email'" required><label [attr.for]="authPage + '-password'">Password</label><div class="password-wrap"><input [id]="authPage + '-password'" [type]="showPassword?'text':'password'" name="password" [(ngModel)]="password" [attr.autocomplete]="authPage==='login'?'current-password':'new-password'" [attr.placeholder]="authPage==='login'?'Enter password':'At least 8 characters'" required><button type="button" [attr.aria-label]="showPassword ? 'Hide passwords' : 'Show passwords'" [attr.aria-controls]="authPage === 'signup' ? 'signup-password signup-confirm' : 'login-password'" (click)="showPassword=!showPassword"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/><path class="password-slash" [class.drawn]="!showPassword" pathLength="1" d="M3 3l18 18"/></svg></button></div>@if(authPage==='signup'){<label [attr.for]="authPage + '-confirm'">Confirm password</label><input [id]="authPage + '-confirm'" [type]="showPassword?'text':'password'" name="confirm" [(ngModel)]="confirm" autocomplete="new-password" placeholder="One more time" required>}@if(page === authPage && error){<p class="form-error" role="alert">{{error}}</p>}<ion-button type="submit" class="primary full">{{authPage==='login'?'Log in':'Create account'}}</ion-button></form><p class="switch-auth">{{authPage==='login'?'New around here?':'Already part of the fold?'}} <a [href]="authPage==='login'?'#signup':'#login'">{{authPage==='login'?'Create an account':'Log in'}}</a></p></div>
 }
 </div></section>
 }
 @if(page==='customer'&&user?.role==='customer'){
 <section class="customer-workspace">
 <div class="customer-heading"><div><h1>Your fresh routine.</h1><p>Hello, {{user!.name.split(' ')[0]}}. Let’s lighten the load.</p></div>@if(customerTab!=='book'){<button class="solid-button new-order-pop" (click)="startBooking()">New laundry order</button>}</div>
-<nav class="customer-tabs sliding-selection" [appSelection]="customerTab==='orders' ? 0 : customerTab==='book' ? 1 : 2" aria-label="Customer workspace"><span class="motion-pill" aria-hidden="true"></span><button [class.selected]="customerTab==='orders'" [attr.aria-current]="customerTab==='orders' ? 'page' : null" (click)="setCustomerTab('orders')">My laundry <span>{{activeOrders.length}}</span></button><button [class.selected]="customerTab==='book'" [attr.aria-current]="customerTab==='book' ? 'page' : null" (click)="startBooking()">Book a service</button><button [class.selected]="customerTab==='account'" [attr.aria-current]="customerTab==='account' ? 'page' : null" (click)="setCustomerTab('account')">My account</button></nav>
+<nav class="customer-tabs sliding-selection" [appSelection]="customerTab==='orders' ? 0 : customerTab==='book' ? 1 : 2" aria-label="Customer workspace"><span class="motion-pill" aria-hidden="true"></span><button [class.selected]="customerTab==='orders'" [attr.aria-current]="customerTab==='orders' ? 'page' : null" (click)="setCustomerTab('orders')">My laundry <span>{{activeOrders.length}}</span></button><button [class.selected]="customerTab==='book'" [attr.aria-current]="customerTab==='book' ? 'page' : null" (click)="setCustomerTab('book')">Book a service</button><button [class.selected]="customerTab==='account'" [attr.aria-current]="customerTab==='account' ? 'page' : null" (click)="setCustomerTab('account')">My account</button></nav>
 @if(notice){<div class="notice" role="status">{{notice}}<button aria-label="Dismiss message" (click)="notice=''">×</button></div>}
 <div>
 @if(customerTab==='orders'){
 <div class="customer-summary"><div><span>In the fresh cycle</span><strong>{{activeOrders.length}}</strong></div><div><span>Ready to take home</span><strong>{{readyForCustomer}}</strong></div><div><span>Your branch</span><strong class="branch-value">NE Pacific</strong></div><svg aria-hidden="true"><use href="#shirt"/></svg></div>
 <div class="list-heading" id="customer-orders"><h2 tabindex="-1">Your laundry</h2><div class="segmented sliding-selection" [appSelection]="customerFilter==='Active' ? 0 : customerFilter==='History' ? 1 : 2" role="group" aria-label="Filter your orders"><span class="motion-pill" aria-hidden="true"></span>@for(tab of ['Active','History','All'];track tab){<button [class.selected]="customerFilter===tab" [attr.aria-pressed]="customerFilter===tab" (click)="setCustomerFilter(tab)">{{tab}}</button>}</div></div>
 <div class="customer-results" appScene="section">
-@if(customerOrders.length){<div class="customer-order-list">@for(order of visibleCustomerOrders;track order.id){<article class="laundry-ticket"><div class="ticket-main"><span class="ticket-id">{{order.id}} · {{order.date | date:'MMM d, y'}}</span><h3>{{order.items.length>1?'Your laundry bundle':order.service}}</h3><p>{{orderSummary(order)}} · Drop-off at NE Pacific</p>@if(order.items.length>1){<p class="bundle-names">{{order.service}}</p>}@if(order.status!=='Cancelled'){<div class="ticket-progress" [attr.aria-label]="'Order status: '+order.status">@for(stage of stages;track stage;let i=$index){<span [class.reached]="stages.indexOf(order.status)>=i" [class.current]="order.status===stage">{{stage==='Ready for pickup'?'Ready':stage==='Completed'?'Picked up':stage}}</span>}</div>}</div><div class="ticket-side"><span class="order-status" [attr.data-status]="order.status" [class.ready]="order.status==='Ready for pickup'" [class.cancelled]="order.status==='Cancelled'">{{order.status}}</span><strong>{{order.amount | currency:'PHP':'symbol':'1.0-2'}}</strong><button class="plain-link" (click)="selectedOrder=order">View order details</button>@if(order.status==='Completed'||order.status==='Cancelled'){<button class="plain-link" (click)="reorder(order)">Reorder</button>}</div></article>}</div>}@else{<div class="empty-state"><svg aria-hidden="true"><use href="#socks"/></svg><h3>{{customerFilter==='History'?'No past loads yet.':'A little room for fresh.'}}</h3><p>{{customerFilter==='History'?'Completed and cancelled orders will appear here.':'Your next laundry day starts with a service and a drop-off date.'}}</p><button class="solid-button" (click)="startBooking()">New laundry order</button></div>}
+@if(customerOrders.length){<div class="customer-order-list">@for(order of visibleCustomerOrders;track order.id){<article class="laundry-ticket"><div class="ticket-main"><span class="ticket-id">{{order.id}} · {{order.date | date:'MMM d, y'}}</span><h3>{{order.items.length>1?'Your laundry bundle':order.service}}</h3><p>{{orderSummary(order)}} · Drop-off at NE Pacific</p>@if(order.items.length>1){<p class="bundle-names">{{order.service}}</p>}@if(order.status!=='Cancelled'){<div class="ticket-progress" [attr.aria-label]="'Order status: '+order.status">@for(stage of stages;track stage;let i=$index){<span [class.reached]="stages.indexOf(order.status)>=i" [class.current]="order.status===stage">{{stage==='Ready for pickup'?'Ready':stage==='Completed'?'Picked up':stage}}</span>}</div>}</div><div class="ticket-side"><span class="order-status" [attr.data-status]="order.status" [class.ready]="order.status==='Ready for pickup'" [class.cancelled]="order.status==='Cancelled'">{{order.status}}</span><strong>{{order.amount | currency:'PHP':'symbol':'1.0-2'}}</strong><button class="plain-link" (click)="openOrder(order, $event.currentTarget)">View order details</button>@if(order.status==='Completed'||order.status==='Cancelled'){<button class="plain-link" (click)="reorder(order)">Reorder</button>}</div></article>}</div>}@else{<div class="empty-state"><svg aria-hidden="true"><use href="#socks"/></svg><h3>{{customerFilter==='History'?'No past loads yet.':'A little room for fresh.'}}</h3><p>{{customerFilter==='History'?'Completed and cancelled orders will appear here.':'Your next laundry day starts with a service and a drop-off date.'}}</p><button class="solid-button" (click)="startBooking()">New laundry order</button></div>}
 @if(orderPageCount>1){
 <nav class="order-pagination" aria-label="Order pages">
   <button class="secondary-button" type="button" [disabled]="orderPage===1" (click)="moveOrderPage(-1)">Back</button>
@@ -180,18 +183,17 @@
   </ng-template>
 </ion-popover>
 <p class="field-hint">{{dropoff | date:'EEE, MMM d'}}</p><label for="notes">Laundry notes <span class="optional">Optional</span></label><textarea id="notes" name="notes" rows="3" maxlength="300" [(ngModel)]="notes" placeholder="Anything we should know about your clothes?"></textarea><p class="field-hint">{{notes.length}} / 300 characters.</p>@if(bookingError){<p class="form-error" role="alert">{{bookingError}}</p>}<button type="submit" class="solid-button wide review-order-button" [disabled]="!services.length">Review order</button></form>}
-@else{<div class="review-details">@for(line of selectedLines;track line.serviceId){<div class="review-service"><div><strong>{{line.service?.name}}</strong><small>{{line.quantity}} {{line.service?.unit?.replace('/ ','')}} × {{line.service?.price | currency:'PHP':'symbol':'1.0-2'}}</small></div><strong>{{((line.service?.price||0)*line.quantity) | currency:'PHP':'symbol':'1.0-2'}}</strong></div>}<div><span>Drop-off</span><strong>{{dropoff | date:'fullDate'}}</strong></div><div><span>Branch</span><strong>NE Pacific, Cabanatuan City</strong></div>@if(notes){<div><span>Your notes</span><p>{{notes}}</p></div>}</div><fieldset class="payment-options">
+@else{<div class="review-details">@for(line of selectedLines;track line.serviceId){<div class="review-service"><div><strong>{{line.service?.name}}</strong><small>{{line.quantity}} {{line.service?.unit?.replace('/ ','')}} × {{line.service?.price | currency:'PHP':'symbol':'1.0-2'}}</small></div><strong>{{((line.service?.price||0)*line.quantity) | currency:'PHP':'symbol':'1.0-2'}}</strong></div>}<div><span>Drop-off</span><strong>{{dropoff | date:'fullDate'}}</strong></div><div><span>Branch</span><strong>NE Pacific, Cabanatuan City</strong></div>@if(notes){<div><span>Your notes</span><p>{{notes}}</p></div>}<div class="review-total-row"><span>Estimated total</span><strong class="line-price">{{estimate | currency:'PHP':'symbol':'1.0-2'}}</strong></div></div><fieldset class="payment-options">
   <legend>Payment preference</legend>
   <div class="payment-methods">
     <label><input type="radio" name="payment" value="Cash" [(ngModel)]="paymentMethod"> <span>Cash</span></label>
     <label><input type="radio" name="payment" value="E-wallet" [(ngModel)]="paymentMethod"> <span>E-wallet</span></label>
   </div>
-  <p class="field-hint">No payment is collected here.</p>
 </fieldset><button class="solid-button wide place-order-button" (click)="placeOrder()" [disabled]="!!successOrder">Place order</button><button class="secondary-button wide" (click)="bookingReview=false">Back to edit</button>}
 </div><aside class="booking-receipt"><div class="receipt-top"><span>launderia</span><span>NE Pacific</span></div><svg aria-hidden="true"><use [attr.href]="'#'+(selectedService?.type||'shirt')"/></svg><h3>Your fresh estimate.</h3><p class="receipt-count">{{selectedLines.length}} {{selectedLines.length===1?'service':'services'}} in your basket</p>@for(line of selectedLines;track line.serviceId){<div class="receipt-service"><strong>{{line.service?.name}}</strong><div><span>{{line.quantity||0}} {{line.service?.unit?.replace('/ ','')}} × {{line.service?.price | currency:'PHP':'symbol':'1.0-2'}}</span><strong>{{((line.service?.price||0)*(line.quantity||0)) | currency:'PHP':'symbol':'1.0-2'}}</strong></div></div>}@empty{<p class="field-hint">Choose a service to start your estimate.</p>}<div class="receipt-total"><span>Estimated total</span><strong class="line-price"><span>{{estimate | currency:'PHP':'symbol':'1.0-2'}}</span></strong></div></aside></div>
 }
 @if(customerTab==='account'){
-<div class="account-layout" appScene="section"><form class="profile-panel" (ngSubmit)="saveProfile()"><h2>Your details.</h2><p class="section-description">A familiar name for your next fresh start.</p><label for="profile-name">Full name</label><input id="profile-name" name="profileName" [(ngModel)]="profileName" maxlength="70" autocomplete="name" (ngModelChange)="profileSaved=false"><label for="account-email">Email address <svg class="welcome-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></label><input id="account-email" [value]="user!.email" readonly><p class="field-hint">Email is the account identifier and cannot be changed here.</p>@if(profileError){<p class="form-error" role="alert">{{profileError}}</p>}<button class="solid-button" type="submit">Save details</button><span class="profile-feedback" role="status">@if(profileSaved){<span>Saved</span>}</span></form><aside class="account-note mint"><h3>Browser storage</h3><p>Orders and your current sign-in stay in this browser.</p></aside></div>
+<div class="account-layout" appScene="section"><form class="profile-panel" (ngSubmit)="saveProfile()"><h2>Your details.</h2><p class="section-description">A familiar name for your next fresh start.</p><label for="profile-name">Full name</label><input id="profile-name" name="profileName" [(ngModel)]="profileName" maxlength="70" autocomplete="name" (ngModelChange)="profileSaved=false"><label for="account-email">Email address <svg class="welcome-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></label><input id="account-email" [value]="user!.email" readonly><p class="field-hint">Email is the account identifier and cannot be changed here.</p>@if(profileError){<p class="form-error" role="alert">{{profileError}}</p>}<button class="solid-button" type="submit">Save details</button><span class="profile-feedback" role="status">@if(profileSaved){<span>Saved</span>}</span></form><aside class="account-note mint"><h3>Express care</h3><p>Drop off daily between 8:30 AM and 8:00 PM at our NE Pacific branch.</p></aside></div>
 }
 </div>
 </section>
@@ -201,55 +203,293 @@
 </main>
 </div></div>}
 @if(adminMode&&page==='admin'){
-<div class="admin-workspace"><aside class="admin-sidebar"><a href="#admin" class="brand" aria-label="Launderia branch workspace" title="Launderia · NE Pacific" (click)="$event.preventDefault();openDashboard()"><span class="brand-mark"><svg class="ui-icon" aria-hidden="true"><use href="#welcome-brand"/></svg></span><span class="brand-copy">launderia<span class="brand-sub">NE PACIFIC</span></span></a><nav aria-label="Admin navigation"><button [class.selected]="adminTab==='overview'" [attr.aria-label]="'Overview & analysis'" title="Overview & analysis" (click)="setAdminTab('overview')"><svg class="ui-icon" aria-hidden="true"><use href="#ui-overview"/></svg><span class="nav-label">Overview</span></button><button [class.selected]="adminTab==='orders'" [attr.aria-label]="'Laundry orders ('+orders.length+')'" title="Laundry orders" (click)="setAdminTab('orders')"><svg class="ui-icon" aria-hidden="true"><use href="#ui-orders"/></svg><span class="nav-label">Orders</span>@if(orders.length){<small>{{orders.length}}</small>}</button><button [class.selected]="adminTab==='services'" [attr.aria-label]="'Services & pricing'" title="Services & pricing" (click)="setAdminTab('services')"><svg class="ui-icon" aria-hidden="true"><use href="#ui-services"/></svg><span class="nav-label">Services</span></button></nav><div class="sidebar-bottom"><span class="admin-avatar" [attr.title]="(user?.name||'Admin') + ' · NE Pacific Administrator'">{{userInitials(user?.name)}}</span><button class="sidebar-logout" aria-label="Log out" title="Log out" (click)="logout()"><svg class="ui-icon" aria-hidden="true"><use href="#ui-logout"/></svg><span class="nav-label">Log out</span></button></div></aside>
+<div class="admin-workspace"><aside class="admin-sidebar"><a href="#admin" class="brand" aria-label="Launderia branch workspace" title="Launderia · NE Pacific" (click)="$event.preventDefault();openDashboard()"><span class="brand-mark"><svg class="ui-icon" aria-hidden="true"><use href="#welcome-brand"/></svg></span><span class="brand-copy">launderia<span class="brand-sub">NE PACIFIC</span></span></a><nav aria-label="Admin navigation"><button [class.selected]="adminTab==='overview'" [attr.aria-current]="adminTab==='overview'?'page':null" [attr.aria-label]="'Overview & analysis'" title="Overview & analysis" (click)="setAdminTab('overview')"><svg class="ui-icon" aria-hidden="true"><use href="#ui-overview"/></svg><span class="nav-label">Overview</span></button><button [class.selected]="adminTab==='orders'" [attr.aria-current]="adminTab==='orders'?'page':null" [attr.aria-label]="'Laundry orders ('+orders.length+')'" title="Laundry orders" (click)="setAdminTab('orders')"><svg class="ui-icon" aria-hidden="true"><use href="#ui-orders"/></svg><span class="nav-label">Orders</span>@if(orders.length){<small>{{orders.length}}</small>}</button><button [class.selected]="adminTab==='services'" [attr.aria-current]="adminTab==='services'?'page':null" [attr.aria-label]="'Services & pricing'" title="Services & pricing" (click)="setAdminTab('services')"><svg class="ui-icon" aria-hidden="true"><use href="#ui-services"/></svg><span class="nav-label">Services</span></button></nav><div class="sidebar-bottom"><span class="admin-avatar" [attr.title]="(user?.name||'Admin') + ' · NE Pacific Administrator'">{{userInitials(user?.name)}}</span><button class="sidebar-logout" aria-label="Log out" title="Log out" (click)="logout()"><svg class="ui-icon" aria-hidden="true"><use href="#ui-logout"/></svg><span class="nav-label">Log out</span></button></div></aside>
 <div class="admin-main"><div class="admin-content">
 <header class="admin-toolbar"><div class="toolbar-title"><h1>{{adminTab==='overview'?'Branch overview':adminTab==='orders'?'Laundry orders':'Services and pricing'}}</h1>@if(adminTab==='services'){<p>Create services, set your rates, and keep the customer menu current.</p>}</div><div class="toolbar-right"><span class="sync-pill"><svg class="ui-icon" aria-hidden="true"><use href="#welcome-cycle"/></svg>Synced</span>@if(adminTab==='overview'){<button type="button" class="toolbar-action" (click)="quickFilterOrders()">Queue · {{orders.length}}</button>}@if(adminTab==='services'){<button type="button" class="solid-button compact-btn" (click)="editService()"><svg class="ui-icon" aria-hidden="true"><use href="#ui-plus"/></svg>Add service</button>}</div>@if(adminTab==='overview'){<div class="toolbar-controls"><div class="period-tabs" role="group" aria-label="Analysis period">@for(opt of periodOptions;track opt.id){<button type="button" [class.selected]="period===opt.id" [attr.aria-pressed]="period===opt.id" (click)="period=opt.id">{{opt.label}}</button>}</div><span class="window-pill"><svg class="ui-icon" aria-hidden="true"><use href="#ui-calendar"/></svg>{{periodRangeLabel}}</span></div>}</header>
 @if(notice){<div class="notice" role="status">{{notice}}<button aria-label="Dismiss message" (click)="notice=''">×</button></div>}
 @if(adminTab==='overview'){
   @let summary = analysis;
-  <div class="branch-report">
-    <section class="report-panel attention-panel" aria-labelledby="attention-heading">
-      <div><h2 id="attention-heading">Needs attention</h2><p>Current branch queue</p></div>
-      <div class="attention-actions">
-        <button type="button" (click)="quickFilterOrders('Received')"><strong>{{awaitingProcessing}}</strong><span>Awaiting processing</span></button>
-        <button type="button" (click)="quickFilterOrders('Ready for pickup')"><strong>{{readyForPickup}}</strong><span>Ready for pickup</span></button>
-      </div>
-    </section>
-    <section class="report-panel" aria-labelledby="summary-heading">
-      <h2 id="summary-heading">Order summary</h2>
-      <dl class="report-metrics">
-        <div><dt>Orders</dt><dd>{{summary.orders.length}}</dd></div>
-        <div><dt>Order value</dt><dd>{{summary.orderValue | currency:'PHP':'symbol':'1.0-2'}}</dd></div>
-        <div><dt>Completed order value</dt><dd>{{summary.completedRevenue | currency:'PHP':'symbol':'1.0-2'}}</dd></div>
-        <div><dt>Average order value</dt><dd>{{summary.average | currency:'PHP':'symbol':'1.0-2'}}</dd></div>
-        <div><dt>Cancellation rate</dt><dd>{{summary.cancelledRate}}%</dd></div>
-      </dl>
-    </section>
-    <section class="report-panel" aria-labelledby="services-heading">
-      <h2 id="services-heading">Service performance</h2>
-      @if(summary.serviceTotals.length){
-        <div class="table-scroll"><table class="report-table">
-          <thead><tr><th scope="col">Service</th><th scope="col" class="numeric">Orders</th><th scope="col" class="numeric">Order value</th></tr></thead>
-          <tbody>@for(service of summary.serviceTotals;track service.id){
-            <tr><th scope="row">{{service.name}}</th><td class="numeric">{{service.count}}</td><td class="numeric">{{service.amount | currency:'PHP':'symbol':'1.0-2'}}</td></tr>
-          }</tbody>
-        </table></div>
-      }@else{<p>No service orders in this period.</p>}
-    </section>
+  <div class="overview-shell">
+    <div class="overview-main" data-layout="grid">
+      <!-- Wide Revenue Trend Monotone Curve Chart -->
+      <article class="chart-card chart-card-wide">
+        <div class="metric-top">
+          <span class="metric-label">Revenue trend</span>
+          <span class="delta-pill" [class.up]="summary.deltas.orderValue !== null && summary.deltas.orderValue > 0" [class.down]="summary.deltas.orderValue !== null && summary.deltas.orderValue < 0" [class.neutral]="summary.deltas.orderValue === null || summary.deltas.orderValue === 0">
+            {{summary.deltas.orderValue !== null ? (summary.deltas.orderValue > 0 ? '+' : '') + summary.deltas.orderValue + '%' : 'Current period'}}
+          </span>
+        </div>
+        <div class="metric-figure">{{summary.orderValue | currency:'PHP':'symbol':'1.0-2'}}</div>
+        <div class="metric-delta-row">
+          <span class="delta-sub">Completed revenue: <strong>{{summary.completedRevenue | currency:'PHP':'symbol':'1.0-2'}}</strong> · {{periodRangeLabel}}</span>
+        </div>
+        <div class="viz-box">
+          <div class="viz-y">
+            @for(yt of revenueCurve.yTicks; track yt){ <span>{{yt}}</span> }
+          </div>
+          <div class="viz-stage">
+            <div class="viz-guides"><span></span><span></span><span></span></div>
+            <svg class="viz-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="adminRevGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#357a99" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#357a99" stop-opacity="0.01"/>
+                </linearGradient>
+              </defs>
+              @if(revenueCurve.areaPath){
+                <path [attr.d]="revenueCurve.areaPath" fill="url(#adminRevGrad)"/>
+                <path [attr.d]="revenueCurve.linePath" class="viz-stroke" vector-effect="non-scaling-stroke"/>
+              }
+            </svg>
+            @for(pt of revenueCurve.points; track pt.label){
+              <span class="viz-dot" [style.left.%]="pt.x" [style.top.%]="pt.y" [title]="pt.title"></span>
+            }
+          </div>
+          <div></div>
+          <div class="viz-x">
+            @for(xl of revenueCurve.xLabels; track xl){ <span>{{xl}}</span> }
+          </div>
+        </div>
+      </article>
+
+      <!-- Order Volume Capsule Bar Chart -->
+      <article class="chart-card">
+        <div class="metric-top">
+          <span class="metric-label">Order volume</span>
+          <span class="delta-pill up">{{summary.orders.length}} total</span>
+        </div>
+        <div class="metric-figure">{{summary.orders.length}} <small class="metric-unit">orders</small></div>
+        <div class="metric-delta-row">
+          <span class="delta-sub">Completed: {{summary.completedCount}} ({{summary.completionRate}}% rate)</span>
+        </div>
+        <div class="viz-box viz-compact">
+          <div class="viz-y">
+            @for(yt of volumeBars.yTicks; track yt){ <span>{{yt}}</span> }
+          </div>
+          <div class="viz-stage">
+            <div class="viz-guides"><span></span><span></span><span></span></div>
+            <div class="capsule-bars" [class.dense]="volumeBars.bars.length > 7">
+              @for(bar of volumeBars.bars; track bar.label){
+                <div class="capsule-col" [title]="bar.title">
+                  <div class="capsule-pill" [class.is-zero]="bar.value === 0" [style.height.%]="bar.heightPct"></div>
+                </div>
+              }
+            </div>
+          </div>
+          <div></div>
+          <div class="viz-x capsule-x" [class.dense]="volumeBars.bars.length > 7">
+            @for(bar of volumeBars.bars; track bar.label){
+              <span>{{bar.label}}</span>
+            }
+          </div>
+        </div>
+      </article>
+
+      <!-- Average Order Value & Health -->
+      <article class="chart-card">
+        <div class="metric-top">
+          <span class="metric-label">Average order value</span>
+          <span class="delta-pill" [class.up]="summary.deltas.average !== null && summary.deltas.average > 0" [class.down]="summary.deltas.average !== null && summary.deltas.average < 0" [class.neutral]="summary.deltas.average === null || summary.deltas.average === 0">
+            {{summary.deltas.average !== null ? (summary.deltas.average > 0 ? '+' : '') + summary.deltas.average + '%' : 'Steady'}}
+          </span>
+        </div>
+        <div class="metric-figure">{{summary.average | currency:'PHP':'symbol':'1.0-2'}}</div>
+        <div class="metric-delta-row">
+          <span class="delta-sub">Cancellation rate: <strong>{{summary.cancelledRate}}%</strong> ({{summary.cancelledCount}} orders)</span>
+        </div>
+        <div class="service-performance-mini">
+          <div class="metric-top">
+            <span class="metric-label">Top service contribution</span>
+          </div>
+          @for(svc of summary.serviceTotals.slice(0, 3); track svc.id){
+            <div class="service-perf-mini-row">
+              <span class="service-perf-name">{{svc.name}}</span>
+              <strong class="service-perf-val">{{svc.amount | currency:'PHP':'symbol':'1.0-2'}} <small class="service-perf-count">({{svc.count}})</small></strong>
+            </div>
+          }
+        </div>
+      </article>
+    </div>
+
+    <!-- Right Rail: Attention, Stage Pipeline, Services -->
+    <div class="overview-rail">
+      <!-- Needs Attention Card -->
+      <article class="rail-card" [class.attention-active]="(awaitingProcessing + readyForPickup) > 0">
+        <div class="metric-top">
+          <span class="metric-label">Needs attention</span>
+          <span class="pulse-count">{{awaitingProcessing + readyForPickup}}</span>
+        </div>
+        <div class="attention-actions">
+          <button type="button" class="toolbar-action attention-action-btn" (click)="quickFilterOrders('Received')">
+            <span>Awaiting processing</span>
+            <strong>{{awaitingProcessing}}</strong>
+          </button>
+          <button type="button" class="toolbar-action attention-action-btn attention-ready" (click)="quickFilterOrders('Ready for pickup')">
+            <span>Ready for pickup</span>
+            <strong>{{readyForPickup}}</strong>
+          </button>
+        </div>
+      </article>
+
+      <!-- Queue Pipeline Breakdown -->
+      <article class="rail-card">
+        <div class="metric-top">
+          <span class="metric-label">Queue pipeline</span>
+          <span class="pulse-count">{{activeQueueCount}} active</span>
+        </div>
+        <div class="breakdown-list">
+          @for(stg of stageCounts; track stg.stage){
+            <button type="button" class="breakdown-row breakdown-row-btn" (click)="quickFilterOrders(stg.stage)">
+              <span class="row-count">{{stg.count}}</span>
+              <span class="row-label">{{stg.stage}}</span>
+              <span class="row-val">{{stg.amount | currency:'PHP':'symbol':'1.0-2'}}</span>
+            </button>
+          }
+        </div>
+      </article>
+
+      <!-- Services Breakdown -->
+      <article class="rail-card">
+        <div class="metric-top">
+          <span class="metric-label">Service performance ({{summary.serviceTotals.length}})</span>
+        </div>
+        <div class="breakdown-list">
+          @for(svc of summary.serviceTotals; track svc.id){
+            <div class="breakdown-row">
+              <span class="row-label">{{svc.name}}</span>
+              <span class="row-count svc-count">{{svc.count}}</span>
+              <span class="row-val">{{svc.amount | currency:'PHP':'symbol':'1.0-2'}}</span>
+            </div>
+          } @empty {
+            <p class="field-hint">No service orders in this period.</p>
+          }
+        </div>
+      </article>
+    </div>
   </div>
 }
 @if(adminTab==='orders'){
-<div class="admin-tools"><label class="search-box"><svg class="ui-icon" aria-hidden="true"><use href="#ui-search"/></svg><input aria-label="Search orders" [(ngModel)]="query" placeholder="Search order, customer, or service"></label><select aria-label="Filter orders by status" [(ngModel)]="filter"><option>All orders</option>@for(stage of stages;track stage){<option>{{stage}}</option>}<option>Cancelled</option></select><span class="result-count">{{filteredOrders.length}} {{filteredOrders.length===1?'order':'orders'}}</span></div><section class="analysis-panel order-queue"><div class="table-scroll"><table><thead><tr><th>Order / drop-off</th><th>Customer</th><th>Service</th><th>Status</th><th class="numeric">Value</th><th>Next action</th></tr></thead><tbody>@for(o of filteredOrders;track o.id){<tr><td><button class="table-link" (click)="selectedOrder=o">{{o.id}}</button><small class="cell-sub">{{o.date | date:'MMM d, y'}}</small></td><td>{{o.name}}<small class="cell-sub">{{o.email}}</small></td><td class="service-cell" [attr.title]="o.service">{{o.items.length>1?'Laundry bundle':o.service}}<small class="cell-sub">{{orderSummary(o)}}</small></td><td><span class="order-status" [attr.data-status]="o.status" [class.ready]="o.status==='Ready for pickup'" [class.cancelled]="o.status==='Cancelled'">{{o.status}}</span></td><td class="numeric">{{o.amount | currency:'PHP':'symbol':'1.0-2'}}</td><td>@if(nextStage(o)&&o.status!=='Cancelled'){<button class="queue-action" (click)="advanceOrder(o)">{{nextStage(o)==='Washing'?'Start washing':nextStage(o)==='Drying'?'Start drying':nextStage(o)==='Ready for pickup'?'Mark ready':'Complete pickup'}} <svg class="ui-icon" aria-hidden="true"><use href="#welcome-up"/></svg></button>}@else{<span class="muted">{{o.status==='Cancelled'?'Cancelled':'Picked up'}}</span>}</td></tr>}@empty{<tr><td colspan="6" class="empty-cell">No orders match. Try a different search or status.</td></tr>}</tbody></table></div></section><p class="admin-footnote">Status changes update the customer’s order view. Notifications are not sent.</p>
+<div class="admin-tools">
+  <label class="search-box">
+    <svg class="ui-icon" aria-hidden="true"><use href="#ui-search"/></svg>
+    <input aria-label="Search orders" [(ngModel)]="query" placeholder="Search order, customer, or service">
+  </label>
+  
+  <div class="custom-dropdown" [class.open]="statusDropdownOpen">
+    <button 
+      type="button" 
+      class="dropdown-trigger" 
+      (click)="toggleStatusDropdown()" 
+      [attr.aria-expanded]="statusDropdownOpen" 
+      aria-haspopup="listbox" 
+      aria-label="Filter orders by status">
+      <span class="dropdown-selected-label">{{filter}}</span>
+      <svg class="dropdown-chevron ui-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m4 6 4 4 4-4"/>
+      </svg>
+    </button>
+    @if(statusDropdownOpen){
+      <div class="dropdown-menu" role="listbox" aria-label="Filter orders by status">
+        @for(opt of filterOptions; track opt){
+          <button 
+            type="button" 
+            role="option" 
+            class="dropdown-item" 
+            [class.active]="filter === opt" 
+            [attr.aria-selected]="filter === opt" 
+            (click)="selectFilter(opt)">
+            <span class="status-indicator" [attr.data-status]="opt"></span>
+            <span class="item-label">{{opt}}</span>
+            @if(filter === opt){
+              <svg class="check-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m3.5 8 3 3 6-6"/>
+              </svg>
+            }
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <span class="result-count">{{filteredOrders.length}} {{filteredOrders.length===1?'order':'orders'}}</span>
+</div>
+<section class="analysis-panel order-queue">
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Order / drop-off</th>
+          <th>Customer</th>
+          <th>Service</th>
+          <th>Status</th>
+          <th class="numeric">Value</th>
+          <th>Next action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(o of paginatedAdminOrders;track o.id){
+          <tr>
+            <td>
+              <button class="table-link" (click)="openOrder(o, $event.currentTarget)">{{o.id}}</button>
+              <small class="cell-sub">{{o.date | date:'MMM d, y'}}</small>
+            </td>
+            <td>{{o.name}}<small class="cell-sub">{{o.email}}</small></td>
+            <td class="service-cell" [attr.title]="o.service">
+              {{o.items.length>1?'Laundry bundle':o.service}}
+              <small class="cell-sub">{{orderSummary(o)}}</small>
+            </td>
+            <td>
+              <span class="order-status" [attr.data-status]="o.status" [class.ready]="o.status==='Ready for pickup'" [class.cancelled]="o.status==='Cancelled'">{{o.status}}</span>
+            </td>
+            <td class="numeric">{{o.amount | currency:'PHP':'symbol':'1.0-2'}}</td>
+            <td>
+              @if(nextStage(o)&&o.status!=='Cancelled'){
+                <button class="queue-action" (click)="advanceOrder(o)">
+                  {{nextStage(o)==='Washing'?'Start washing':nextStage(o)==='Drying'?'Start drying':nextStage(o)==='Ready for pickup'?'Mark ready':'Complete pickup'}}
+                  <svg class="ui-icon" aria-hidden="true"><use href="#welcome-up"/></svg>
+                </button>
+              } @else {
+                <span class="muted">{{o.status==='Cancelled'?'Cancelled':'Picked up'}}</span>
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="empty-cell">No orders match. Try a different search or status.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <footer class="admin-table-footer" aria-label="Admin orders pagination">
+    <span class="pagination-summary" role="status">
+      @if(filteredOrders.length > 0){
+        Showing <strong>{{adminOrdersStart}}–{{adminOrdersEnd}}</strong> of <strong>{{filteredOrders.length}}</strong> orders
+      } @else {
+        No orders to show
+      }
+    </span>
+    <nav class="order-pagination admin-pagination-nav" aria-label="Admin order pages">
+      <button class="secondary-button" type="button" [disabled]="adminOrdersPage <= 1" (click)="moveAdminOrderPage(-1)" aria-label="Previous page">
+        Back
+      </button>
+      <span class="page-count" role="status">Page {{adminOrdersPage}} of {{adminOrderPageCount}}</span>
+      <button class="secondary-button" type="button" [disabled]="adminOrdersPage >= adminOrderPageCount" (click)="moveAdminOrderPage(1)" aria-label="Next page">
+        Next
+      </button>
+    </nav>
+  </footer>
+</section>
 }
 @if(adminTab==='services'){
-<div class="admin-tools"><label class="search-box"><svg class="ui-icon" aria-hidden="true"><use href="#ui-search"/></svg><input aria-label="Search services" [(ngModel)]="query" placeholder="Find a laundry service"></label><span class="result-count">{{allServices.length}} services · {{services.length}} available</span></div><div class="service-admin-list">@for(s of filteredServices;track s.id){<article class="service-admin-card" [class.paused]="!s.active"><div [class]="'admin-garment '+s.color"><svg aria-hidden="true"><use [attr.href]="'#'+s.type"/></svg></div><div class="service-admin-info"><div><h2>{{s.name}}</h2><span class="availability" [class.off]="!s.active">{{s.active?'Available':'Paused'}}</span></div><p>{{s.desc||'No description yet.'}}</p><span class="service-unit">{{s.unit==='/ kg'?'Priced by weight':s.unit==='/ piece'?'Priced per item':'Priced per load'}}</span></div><div class="service-admin-price"><strong>{{s.price | currency:'PHP':'symbol':'1.0-2'}}</strong><small>{{s.unit}}</small></div><div class="service-admin-actions"><button class="secondary-button" (click)="editService(s)" [attr.aria-label]="'Edit '+s.name">Edit service</button><button class="plain-link" (click)="toggleService(s)" [attr.aria-label]="(s.active?'Pause ':'Activate ')+s.name">{{s.active?'Pause service':'Make available'}}</button></div></article>}@empty{<div class="empty-state"><h3>No services found.</h3><p>Try another name or add a new service.</p></div>}</div>
+<div class="admin-tools"><label class="search-box"><svg class="ui-icon" aria-hidden="true"><use href="#ui-search"/></svg><input aria-label="Search services" [(ngModel)]="query" placeholder="Find a laundry service"></label><span class="result-count">{{query ? filteredServices.length + ' matched · ' : ''}}{{allServices.length}} services · {{services.length}} available</span></div><div class="service-admin-list">@for(s of filteredServices;track s.id){<article class="service-admin-card" [class.paused]="!s.active"><div [class]="'admin-garment '+s.color"><svg aria-hidden="true"><use [attr.href]="'#'+s.type"/></svg></div><div class="service-admin-info"><div><h2>{{s.name}}</h2><span class="availability" [class.off]="!s.active">{{s.active?'Available':'Paused'}}</span></div><p>{{s.desc||'No description yet.'}}</p><span class="service-unit">{{s.unit==='/ kg'?'Priced by weight':s.unit==='/ piece'?'Priced per item':'Priced per load'}}</span></div><div class="service-admin-price"><strong>{{s.price | currency:'PHP':'symbol':'1.0-2'}}</strong><small>{{s.unit}}</small></div><div class="service-admin-actions"><button class="secondary-button" (click)="editService(s)" [attr.aria-label]="'Edit '+s.name">Edit service</button><button class="plain-link" (click)="toggleService(s)" [attr.aria-label]="(s.active?'Pause ':'Activate ')+s.name">{{s.active?'Pause service':'Make available'}}</button></div></article>}@empty{<div class="empty-state"><h3>No services found.</h3><p>Try another name or add a new service.</p></div>}</div>
 }
 
 </div></div></div>
 }
 
 @if(serviceEditor&&adminMode){
-<div class="modal-backdrop" (animate.enter)="enterDialog($event)" (animate.leave)="leaveDialog($event)"><section class="dialog service-dialog" role="dialog" aria-modal="true" aria-labelledby="service-dialog-title"><div class="dialog-heading"><div><h2 id="service-dialog-title">{{draft.id?'A little menu refresh.':'A new kind of fresh.'}}</h2><p>{{draft.id?'Update service details and pricing.':'Add a service to your customer menu.'}}</p></div><button class="close-dialog" aria-label="Close service editor" (click)="serviceEditor=false">×</button></div><form (ngSubmit)="saveService()" novalidate><label for="service-name">Service name</label><input id="service-name" name="serviceName" [(ngModel)]="draft.name" maxlength="70" placeholder="e.g. Delicate care" required><label for="service-description">Description</label><textarea id="service-description" name="serviceDescription" [(ngModel)]="draft.desc" maxlength="240" rows="2" placeholder="Tell customers how you’ll care for their laundry."></textarea><div class="form-two"><div><label for="service-price">Rate (PHP)</label><input id="service-price" name="servicePrice" type="number" min="0.01" max="100000" step="0.01" [(ngModel)]="draft.price" required></div><div><label for="service-unit">Pricing unit</label><select id="service-unit" name="serviceUnit" [(ngModel)]="draft.unit"><option>/ kg</option><option>/ piece</option><option>/ load</option></select></div></div><div class="form-two"><div><label for="service-art">Illustration</label><select id="service-art" name="serviceArt" [(ngModel)]="draft.type"><option value="shirt">Shirt</option><option value="socks">Socks</option><option value="blanket">Comforter</option></select></div><div><label for="service-color">Menu color</label><select id="service-color" name="serviceColor" [(ngModel)]="draft.color"><option value="yellow">Butter yellow</option><option value="blue">Baby blue</option><option value="pink">Blush pink</option><option value="mint">Mint green</option></select></div></div><label class="checkbox-label"><input type="checkbox" name="serviceActive" [(ngModel)]="draft.active"><span>Available on the customer menu</span></label>@if(serviceError){<p class="form-error" role="alert">{{serviceError}}</p>}<div class="dialog-actions"><button type="button" class="secondary-button" (click)="serviceEditor=false">Cancel</button><button class="solid-button" type="submit">{{draft.id?'Save changes':'Add service'}}</button></div><p class="field-hint">Saved to this browser. Existing order prices stay unchanged.</p></form></section></div>
+<div class="modal-backdrop" (animate.enter)="enterDialog($event)" (animate.leave)="leaveDialog($event)"><section class="dialog service-dialog" role="dialog" aria-modal="true" aria-labelledby="service-dialog-title"><div class="dialog-heading"><div><h2 id="service-dialog-title">{{draft.id?'A little menu refresh.':'A new kind of fresh.'}}</h2><p>{{draft.id?'Update service details and pricing.':'Add a service to your customer menu.'}}</p></div><button class="close-dialog" aria-label="Close service editor" (click)="closeServiceEditor()">×</button></div><form (ngSubmit)="saveService()" novalidate><label for="service-name">Service name</label><input id="service-name" name="serviceName" [(ngModel)]="draft.name" maxlength="70" placeholder="e.g. Delicate care" required><label for="service-description">Description</label><textarea id="service-description" name="serviceDescription" [(ngModel)]="draft.desc" maxlength="240" rows="2" placeholder="Tell customers how you’ll care for their laundry."></textarea><div class="form-two"><div><label for="service-price">Rate (PHP)</label><input id="service-price" name="servicePrice" type="number" min="0.01" max="100000" step="0.01" [(ngModel)]="draft.price" required></div><div><label for="service-unit">Pricing unit</label><select id="service-unit" name="serviceUnit" [(ngModel)]="draft.unit"><option>/ kg</option><option>/ piece</option><option>/ load</option></select></div></div><div class="form-two"><div><label for="service-art">Illustration</label><select id="service-art" name="serviceArt" [(ngModel)]="draft.type"><option value="shirt">Shirt</option><option value="socks">Socks</option><option value="blanket">Comforter</option></select></div><div><label for="service-color">Menu color</label><select id="service-color" name="serviceColor" [(ngModel)]="draft.color"><option value="yellow">Butter yellow</option><option value="blue">Baby blue</option><option value="pink">Blush pink</option><option value="mint">Mint green</option></select></div></div><label class="checkbox-label"><input type="checkbox" name="serviceActive" [(ngModel)]="draft.active"><span>Available on the customer menu</span></label>@if(serviceError){<p class="form-error" role="alert">{{serviceError}}</p>}<div class="dialog-actions"><button type="button" class="secondary-button" (click)="closeServiceEditor()">Cancel</button><button class="solid-button" type="submit">{{draft.id?'Save changes':'Add service'}}</button></div><p class="field-hint">Existing order prices stay unchanged.</p></form></section></div>
 }
 <dialog #cancelPopup class="dialog cancel-popup" aria-labelledby="cancel-title"
   (cancel)="$event.stopPropagation()" (close)="cancelId=''">
@@ -261,18 +501,18 @@
   </div>
 </dialog>
 @if(selectedOrder;as o){
-<div class="modal-backdrop order-sheet-backdrop" (animate.enter)="enterDialog($event)" (animate.leave)="leaveDialog($event)"><section class="dialog order-dialog" role="dialog" aria-modal="true" aria-labelledby="order-dialog-title"><div class="dialog-heading"><div><span class="scope">{{o.id}}</span><h2 id="order-dialog-title">{{o.items.length>1?'Your laundry bundle':o.service}}</h2></div><button class="close-dialog" aria-label="Close order details" (click)="selectedOrder=null;cancelId=''">×</button></div>
-<div class="order-dialog-columns"><div class="order-dialog-status"><span class="order-status" [attr.data-status]="o.status" [class.ready]="o.status==='Ready for pickup'" [class.cancelled]="o.status==='Cancelled'">{{o.status}}</span>@if(o.status!=='Cancelled'){<ol class="order-timeline">@for(stage of stages;track stage;let i=$index){<li [class.reached]="stages.indexOf(o.status)>=i" [class.current]="o.status===stage"><span>@if(stages.indexOf(o.status)>i){<svg class="ui-icon" aria-hidden="true"><use href="#ui-check"/></svg>}@else{{{i+1}}}</span><div><strong>{{stage}}</strong>@if(o.status===stage){<small>{{stage==='Received'?'Order recorded. Bring your laundry on your drop-off date.':stage==='Washing'?'Your laundry is being washed.':stage==='Drying'?'The fresh finish is on its way.':stage==='Ready for pickup'?'Your laundry is ready at NE Pacific.':'Picked up. Enjoy your fresh clothes!'}}</small>}</div></li>}</ol>}@else{<p class="cancelled-note" role="status">This order has been cancelled. No payment was taken.</p>}
-</div><div class="order-dialog-details"><div class="detail-grid"><div><small>Customer</small><strong>{{o.name}}</strong></div><div><small>Drop-off date</small><strong>{{o.date | date:'MMM d, y'}}</strong></div>@if(o.paymentMethod){<div><small>Payment preference</small><strong>{{o.paymentMethod}}</strong></div>}</div><div class="order-line-items">@for(item of o.items;track item.serviceId){<div><span><strong>{{item.service}}</strong><small>{{item.quantity}} {{item.unit.replace('/ ','')}} × {{item.rate | currency:'PHP':'symbol':'1.0-2'}}</small></span><strong>{{item.amount | currency:'PHP':'symbol':'1.0-2'}}</strong></div>}</div>@if(o.notes){<div class="order-notes"><small>Laundry notes</small><p>{{o.notes}}</p></div>}<div class="detail-total"><span>Estimated order total</span><strong>{{o.amount | currency:'PHP':'symbol':'1.0-2'}}</strong></div><p class="field-hint">Saved in this browser. No booking or payment was made.</p>
+<div class="modal-backdrop order-sheet-backdrop" (animate.enter)="enterDialog($event)" (animate.leave)="leaveDialog($event)"><section class="dialog order-dialog" role="dialog" aria-modal="true" aria-labelledby="order-dialog-title"><div class="dialog-heading"><div><span class="scope">{{o.id}}</span><h2 id="order-dialog-title">{{o.items.length>1?'Your laundry bundle':o.service}}</h2></div><button class="close-dialog" aria-label="Close order details" (click)="closeOrder()">×</button></div>
+<div class="order-dialog-columns"><div class="order-dialog-status"><span class="order-status" [attr.data-status]="o.status" [class.ready]="o.status==='Ready for pickup'" [class.cancelled]="o.status==='Cancelled'">{{o.status}}</span>@if(o.status!=='Cancelled'){<ol class="order-timeline">@for(stage of stages;track stage;let i=$index){<li [class.reached]="stages.indexOf(o.status)>=i" [class.current]="o.status===stage"><span>@if(stages.indexOf(o.status)>i){<svg class="ui-icon" aria-hidden="true"><use href="#ui-check"/></svg>}@else{{{i+1}}}</span><div><strong>{{stage}}</strong>@if(o.status===stage){<small>{{stage==='Received'?'Order recorded. Bring your laundry on your drop-off date.':stage==='Washing'?'Your laundry is being washed.':stage==='Drying'?'The fresh finish is on its way.':stage==='Ready for pickup'?'Your laundry is ready at NE Pacific.':'Picked up. Enjoy your fresh clothes!'}}</small>}</div></li>}</ol>}@else{<p class="cancelled-note" role="status">This order has been cancelled.</p>}
+</div><div class="order-dialog-details"><div class="detail-grid"><div><small>Customer</small><strong>{{o.name}}</strong></div><div><small>Drop-off date</small><strong>{{o.date | date:'MMM d, y'}}</strong></div>@if(o.paymentMethod){<div><small>Payment preference</small><strong>{{o.paymentMethod}}</strong></div>}</div><div class="order-line-items">@for(item of o.items;track item.serviceId){<div><span><strong>{{item.service}}</strong><small>{{item.quantity}} {{item.unit.replace('/ ','')}} × {{item.rate | currency:'PHP':'symbol':'1.0-2'}}</small></span><strong>{{item.amount | currency:'PHP':'symbol':'1.0-2'}}</strong></div>}</div>@if(o.notes){<div class="order-notes"><small>Laundry notes</small><p>{{o.notes}}</p></div>}<div class="detail-total"><span>Estimated order total</span><strong>{{o.amount | currency:'PHP':'symbol':'1.0-2'}}</strong></div>
 @if(!adminMode && o.status === 'Received'){
   <button class="plain-link danger-text cancel-trigger" (click)="cancelId=o.id; cancelPopup.showModal()">Cancel order</button>
 }
 </div></div></section></div>
 }
 @if(successOrder;as order){
-<div class="modal-backdrop" (animate.enter)="enterDialog($event)" (animate.leave)="leaveDialog($event)"><section class="dialog order-success-dialog" role="dialog" aria-modal="true" aria-labelledby="order-success-title"><button class="close-dialog success-close" aria-label="Close order confirmation" (click)="dismissOrderConfirmation()">×</button><div class="success-art" aria-hidden="true"><ng-container *ngTemplateOutlet="successCheck"/></div><h2 id="order-success-title">A fresh start. All set.</h2><p class="success-description">Your laundry order has been saved.</p><div class="success-receipt"><div><span>Order number</span><strong>{{order.id}}</strong></div><div><span>Services selected</span><strong>{{order.items.length}}</strong></div><div><span>Drop-off date</span><strong>{{order.date | date:'MMM d, y'}}</strong></div>@if(order.paymentMethod){<div><span>Payment preference</span><strong>{{order.paymentMethod}}</strong></div>}<div><span>Estimated total</span><strong>{{order.amount | currency:'PHP':'symbol':'1.0-2'}}</strong></div></div><button id="success-view-order" class="solid-button wide" (click)="viewSuccessfulOrder()">View my order</button><button class="secondary-button wide" (click)="backToMyLaundry()">Back to my laundry</button></section></div>
+<div class="modal-backdrop" (animate.enter)="enterDialog($event)" (animate.leave)="leaveDialog($event)"><section class="dialog order-success-dialog" role="dialog" aria-modal="true" aria-labelledby="order-success-title"><button class="close-dialog success-close" aria-label="Close order confirmation" (click)="dismissOrderConfirmation()">×</button><div class="success-art" aria-hidden="true"><ng-container *ngTemplateOutlet="successCheck"/></div><h2 id="order-success-title">A fresh start. All set.</h2><p class="success-description">Your laundry order has been placed.</p><div class="success-receipt"><div><span>Order number</span><strong>{{order.id}}</strong></div><div><span>Services selected</span><strong>{{order.items.length}}</strong></div><div><span>Drop-off date</span><strong>{{order.date | date:'MMM d, y'}}</strong></div>@if(order.paymentMethod){<div><span>Payment preference</span><strong>{{order.paymentMethod}}</strong></div>}<div><span>Estimated total</span><strong>{{order.amount | currency:'PHP':'symbol':'1.0-2'}}</strong></div></div><button id="success-view-order" class="solid-button wide" (click)="viewSuccessfulOrder()">View my order</button><button class="secondary-button wide" (click)="backToMyLaundry()">Back to my laundry</button></section></div>
 }
-<ng-template #successCheck><div class="success-check" aria-hidden="true"><svg appSuccess viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path class="success-ring" d="M 9 24 A 15 15 0 0 1 39 24 A 15 15 0 0 1 9 24"/><path class="success-tick" d="m17 24 5 5 9-10"/></svg></div></ng-template>
+<ng-template #successCheck><div class="success-check" aria-hidden="true"><svg appSuccess viewBox="0 0 52 52" fill="none"><circle class="success-circle-ring" cx="26" cy="26" r="21" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><path class="success-check-tick" d="m16.5 26.5 6.5 6.5 12.5-13" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></ng-template>
 <div class="success-announcer" role="status">@if(successMessage){<div class="success-toast" appScene="feedback"><ng-container *ngTemplateOutlet="successCheck"/><strong>{{successMessage}}</strong></div>}</div>
 @if(storageWarning){<div class="storage-warning" role="status">{{storageWarning}}</div>}
 

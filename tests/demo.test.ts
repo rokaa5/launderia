@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { authenticate, validateSignup } from '../src/app/demo.ts';
 test('demo admin and customer have distinct roles',()=>{assert.equal(authenticate('admin','admin')?.role,'admin');assert.equal(authenticate('user','user')?.role,'customer');assert.equal(authenticate('admin','wrong'),null);});
-test('registration validates names, email, password and confirmation',()=>{assert.ok(validateSignup('','bad','abc','x'));assert.match(validateSignup('Ana','ana@example.com','Password1','Password1'), /gmail/);assert.ok(validateSignup('Ana','ana@gmail.com','Password1','wrong'));assert.equal(validateSignup('Ana','ana@gmail.com','Password1','Password1'),'');});
+test('registration validates names, email, password and confirmation',()=>{assert.ok(validateSignup('','bad','abc','x'));assert.match(validateSignup('Ana','bad-email','Password1','Password1'), /valid email address/i);assert.ok(validateSignup('Ana','ana@example.com','Password1','wrong'));assert.equal(validateSignup('Ana','ana@example.com','Password1','Password1'),'');});
 
 
 test('multiple signups remain available and duplicate emails cannot replace passwords',async()=>{
